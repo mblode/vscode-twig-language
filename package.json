@@ -30,7 +30,8 @@
         "twig",
         "html",
         "template",
-        "snippets"
+        "snippets",
+        "craft cms"
     ],
     "contributes": {
         "languages": [
