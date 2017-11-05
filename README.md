@@ -1,4 +1,4 @@
-# vscode-twig-language
+# VSCode Twig Language
 An extension for VS Code which provides support for the Twig language.
 
 ## Installation

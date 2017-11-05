@@ -1,9 +1,23 @@
 {
     "name": "twig-language",
-    "displayName": "twig-language",
+    "displayName": "Twig Language",
     "description": "Syntax highlighting and Craft CMS 3 snippets for Twig",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "mblode",
+    "author": {
+        "name": "Matthew Blode",
+        "email": "m.blode@gmail.com",
+        "url": "https://matthewblode.com"
+    },
+    "homepage": "https://github.com/mblode/vscode-twig-language",
+    "bugs": {
+        "url": "https://github.com/mblode/vscode-twig-language/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/mblode/vscode-twig-language.git"
+    },
+    "icon": "images/icon.png",
     "engines": {
         "vscode": "^1.17.0"
     },
@@ -15,7 +29,8 @@
         "php",
         "twig",
         "html",
-        "template"
+        "template",
+        "snippets"
     ],
     "contributes": {
         "languages": [
