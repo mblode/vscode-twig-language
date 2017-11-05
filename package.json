@@ -1,0 +1,49 @@
+{
+    "name": "twig-language",
+    "displayName": "twig-language",
+    "description": "Syntax highlighting and Craft CMS 3 snippets for Twig",
+    "version": "0.0.1",
+    "publisher": "mblode",
+    "engines": {
+        "vscode": "^1.17.0"
+    },
+    "categories": [
+        "Languages",
+        "Snippets"
+    ],
+    "keywords": [
+        "php",
+        "twig",
+        "html",
+        "template"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "twig",
+                "aliases": [
+                    "HTML (Twig)",
+                    "twig"
+                ],
+                "extensions": [
+                    ".twig",
+                    ".html.twig"
+                ],
+                "configuration": "./twig.configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "twig",
+                "scopeName": "text.html.twig",
+                "path": "./syntaxes/twig.tmLanguage"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "twig",
+                "path": "./snippets/snippets.json"
+            }
+        ]
+    }
+}
