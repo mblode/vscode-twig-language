@@ -1,8 +1,8 @@
 {
     "name": "twig-language",
     "displayName": "Twig Language",
-    "description": "Syntax highlighting and Craft CMS 3 snippets for Twig",
-    "version": "0.0.3",
+    "description": "Syntax highlighting, Craft CMS snippets, and PrettyDiff formatting for Twig",
+    "version": "0.1.0",
     "publisher": "mblode",
     "author": {
         "name": "Matthew Blode",
@@ -29,9 +29,9 @@
     "keywords": [
         "php",
         "twig",
-        "html",
         "snippets",
-        "craft cms"
+        "craft",
+        "beautify"
     ],
     "activationEvents": [
         "onLanguage:twig"

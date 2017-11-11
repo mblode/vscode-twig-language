@@ -23,7 +23,8 @@ const beautifyDocRanges = (doc, ranges, type, formattingOptions) => {
                     newline: true,
                     objsort: 'none',
                     unformatted: true,
-                    wrap: 0
+                    wrap: 0,
+                    Twig: true,
                 })
             )
         )
