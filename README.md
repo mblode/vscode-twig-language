@@ -18,7 +18,7 @@ Install through VS Code extensions. Search for `Twig Language`
 
 ### Custom keybindings
 
-If you don't like the defaults, you can rebind `editor.action.formatDocument` and `editor.action.formatSelection` in the keyboard shortcuts menu of vscode.
+If you don't like the defaults, you can rebind `editor.action.formatDocument` in the keyboard shortcuts menu of vscode.
 
 ### Format On Save
 
