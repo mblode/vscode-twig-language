@@ -8,6 +8,12 @@ Install through VS Code extensions. Search for `Twig Language`
 
 [Visual Studio Code Market Place: Twig Language](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language)
 
+Can also be installed using
+
+```
+ext install mblode.twig-language
+```
+
 ## PrettyDiff code formatter for Twig files
 
 ### Using Command Palette (CMD/CTRL + Shift + P)
