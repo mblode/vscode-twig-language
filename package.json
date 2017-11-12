@@ -3,7 +3,7 @@
     "displayName": "Twig Language",
     "description":
         "Syntax highlighting, Snippets, and PrettyDiff formatting for Twig",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "publisher": "mblode",
     "author": {
         "name": "Matthew Blode",
