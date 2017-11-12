@@ -64,17 +64,12 @@
                 "language": "twig",
                 "path": "./snippets/snippets.json"
             }
-        ],
-        "commands": [
-            {
-                "command": "extension.twig-language",
-                "title": "Format Twig using Prettydiff"
-            }
         ]
     },
     "devDependencies": {
         "@types/node": "*",
-        "eslint": "^4.11.0",
+        "babel-eslint": "7",
+        "eslint": "3.x",
         "eslint-config-prettier": "^2.7.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"

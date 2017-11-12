@@ -1,3 +1,7 @@
 {
-    "extends": ["prettier"]
+    "extends": ["prettier"],
+    "parser": "babel-eslint",
+    "rules": {
+        "strict": 0
+    }
 }
