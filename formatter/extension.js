@@ -2,15 +2,6 @@ const vscode = require('vscode');
 const prettydiff = require('./libs/prettydiff');
 
 const prettyDiff = (document, range, options) => {
-    if (range === null) {
-        const start = new vscode.Position(0, 0);
-        const end = new vscode.Position(
-            document.lineCount - 1,
-            document.lineAt(document.lineCount - 1).text.length
-        );
-        range = new vscode.Range(start, end);
-    }
-
     const result = [];
     const content = document.getText(range);
 
@@ -29,7 +20,7 @@ const prettyDiff = (document, range, options) => {
     });
 
     result.push(vscode.TextEdit.replace(range, newText));
-    return result
+    return result;
 };
 
 function activate(context) {
@@ -46,7 +37,13 @@ function activate(context) {
                     options,
                     token
                 ) {
-                    return prettyDiff(document, null, options);
+                    const rng = new vscode.Range(
+                        0,
+                        0,
+                        Number.MAX_VALUE,
+                        Number.MAX_VALUE
+                    );
+                    return prettyDiff(document, rng, options);
                 }
             })
         );
@@ -59,13 +56,16 @@ function activate(context) {
                     options,
                     token
                 ) {
-                    let start = document.offsetAt(range.start);
-                    let end = document.offsetAt(range.end);
-                    return prettyDiff(
-                        document,
-                        new vscode.Range(start, end),
-                        options
+                    let end = range.end;
+                    if (end.character === 0)
+                        end = end.translate(-1, Number.MAX_VALUE);
+                    else end = end.translate(0, Number.MAX_VALUE);
+                    const rng = new vscode.Range(
+                        new vscode.Position(range.start.line, 0),
+                        end
                     );
+
+                    return prettyDiff(document, rng, options);
                 }
             })
         );
