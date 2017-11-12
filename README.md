@@ -36,10 +36,6 @@ Respects `editor.formatOnSave` setting.
 
 ```twig
 
-}}                {{  }}
-%%                {%  %}
-##                {#  #}
-
 do                {% do ... %}
 extends           {% extends 'template' %}
 from              {% from 'template' import 'macro' %}
@@ -155,24 +151,6 @@ formforgotpassword       Example forgot password form
 formsetpassword          Example set password form
 formsearch               Example search form
 formsearchresults        Example search form results
-```
-
-### Reference Hints
-
-```
-info            All craft.assets properties and template tags
-info            All craft.crategories properties and template tags
-info            All craft.config properties and template tags
-info            All craft.entries properties and template tags
-info            All craft.feeds properties and template tags
-info            All craft.fields properties and template tags
-info            All craft.globals properties and template tags
-info            All craft.request properties and template tags
-info            All craft.sections properties and template tags
-info            All craft.session properties and template tags
-info            All craft.tags properties and template tags
-info            All craft.users properties and template tags
-info            All craft globals (site info, date, users, template tags)
 ```
 
 ## Twig syntax highlighting

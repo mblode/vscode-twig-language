@@ -14,6 +14,7 @@ const prettyDiff = (document, range, options) => {
         objsort: 'none',
         unformatted: true,
         wrap: 0,
+        insize: options.tabSize,
         methodchain: 'chain',
         html: true,
         Twig: true
@@ -57,9 +58,12 @@ function activate(context) {
                     token
                 ) {
                     let end = range.end;
-                    if (end.character === 0)
+                    if (end.character === 0) {
                         end = end.translate(-1, Number.MAX_VALUE);
-                    else end = end.translate(0, Number.MAX_VALUE);
+                    } else {
+                        end = end.translate(0, Number.MAX_VALUE);
+                    }
+
                     const rng = new vscode.Range(
                         new vscode.Position(range.start.line, 0),
                         end
