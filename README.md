@@ -1,6 +1,6 @@
 # VSCode Twig Language
 
-Syntax highlighting, Snippets, and PrettyDiff formatting for Twig.
+Syntax highlighting, Snippets, and Pretty Diff formatting for Twig.
 
 ## Installation
 
