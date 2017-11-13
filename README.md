@@ -10,8 +10,6 @@
   </p>
 </p>
 
----
-
 ## Table of contents
 
 - [Installation](#installation)
@@ -55,6 +53,11 @@ OR
 1. Select the text you want to Prettify
 2. CMD + Shift + P -> Format Selection
 ```
+
+### Information about Twig code on hover
+
+VSCode Twig language shows information about the symbol/object that's below the mouse cursor when you hover within Twig files.
+
 
 ### Craft CMS/Twig code snippets
 
@@ -180,10 +183,6 @@ formsetpassword          Example set password form
 formsearch               Example search form
 formsearchresults        Example search form results
 ```
-
-### Information about Twig code on hover
-
-VSCode Twig language shows information about the symbol/object that's below the mouse cursor when you hover within Twig files.
 
 ## Optional VSCode Config
 
