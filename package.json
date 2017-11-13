@@ -3,7 +3,7 @@
     "displayName": "Twig Language",
     "description":
         "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "publisher": "mblode",
     "author": {
         "name": "Matthew Blode",
@@ -32,7 +32,7 @@
                 "id": "twig",
                 "aliases": ["HTML (Twig)", "twig"],
                 "extensions": [".twig", ".html.twig"],
-                "configuration": "./src/twig.configuration.json"
+                "configuration": "./twig.configuration.json"
             }
         ],
         "grammars": [
