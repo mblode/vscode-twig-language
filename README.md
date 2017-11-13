@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
-    <img src="images/icon.png" alt="" width=100 height=100>
+    <img src="https://github.com/mblode/vscode-twig-language/blob/master/images/icon.png?raw=true" alt="" width=100 height=100>
   </a>
 
   <h3 align="center">VSCode Twig Language</h3>
