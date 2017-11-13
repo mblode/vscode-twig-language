@@ -1,6 +1,20 @@
 const vscode = require('vscode');
 const prettydiff = require('prettydiff2');
 
+var snippetsArr = require('./hover/filters.json');
+var functionsArr = require('./hover/functions.json');
+var twigArr = require('./hover/twig.json');
+
+function createHover(snippet) {
+    var example = typeof snippet.example == 'undefined' ? '' : snippet.example;
+    var description =
+        typeof snippet.description == 'undefined' ? '' : snippet.description;
+    return new vscode.Hover({
+        language: 'twig',
+        value: description + '\n\n' + example
+    });
+}
+
 const prettyDiff = (document, range, options) => {
     const result = [];
     const content = document.getText(range);
@@ -30,6 +44,42 @@ function activate(context) {
     registerDocType('twig');
 
     function registerDocType(type) {
+        context.subscriptions.push(
+            vscode.languages.registerHoverProvider(type, {
+                provideHover(document, position, token) {
+                    var range = document.getWordRangeAtPosition(position);
+                    var word = document.getText(range);
+
+                    for (var snippet in snippetsArr) {
+                        if (
+                            snippetsArr[snippet].prefix == word ||
+                            snippetsArr[snippet].hover == word
+                        ) {
+                            return createHover(snippetsArr[snippet]);
+                        }
+                    }
+
+                    for (var snippet in functionsArr) {
+                        if (
+                            functionsArr[snippet].prefix == word ||
+                            functionsArr[snippet].hover == word
+                        ) {
+                            return createHover(functionsArr[snippet]);
+                        }
+                    }
+
+                    for (var snippet in twigArr) {
+                        if (
+                            twigArr[snippet].prefix == word ||
+                            twigArr[snippet].hover == word
+                        ) {
+                            return createHover(twigArr[snippet]);
+                        }
+                    }
+                }
+            })
+        );
+
         context.subscriptions.push(
             vscode.languages.registerDocumentFormattingEditProvider(type, {
                 provideDocumentFormattingEdits: function(

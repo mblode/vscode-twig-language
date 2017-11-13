@@ -2,7 +2,7 @@
     "name": "twig-language",
     "displayName": "Twig Language",
     "description":
-        "Syntax highlighting, Snippets, and PrettyDiff formatting for Twig",
+        "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
     "version": "0.1.5",
     "publisher": "mblode",
     "author": {
@@ -25,29 +25,32 @@
     "categories": ["Languages", "Snippets", "Other"],
     "keywords": ["php", "twig", "snippets", "craft", "beautify"],
     "activationEvents": ["onLanguage:twig"],
-    "main": "./formatter/extension",
+    "main": "./src/extension",
     "contributes": {
         "languages": [
             {
                 "id": "twig",
                 "aliases": ["HTML (Twig)", "twig"],
                 "extensions": [".twig", ".html.twig"],
-                "configuration": "./twig.configuration.json"
+                "configuration": "./src/twig.configuration.json"
             }
         ],
         "grammars": [
             {
                 "language": "twig",
                 "scopeName": "text.html.twig",
-                "path": "./syntaxes/twig.tmLanguage"
+                "path": "./src/syntaxes/twig.tmLanguage"
             }
         ],
         "snippets": [
             {
                 "language": "twig",
-                "path": "./snippets/snippets.json"
+                "path": "./src/snippets/snippets.json"
             }
         ]
+    },
+    "capabilities": {
+        "hoverProvider": "true"
     },
     "devDependencies": {
         "@types/node": "*",

@@ -4,6 +4,5 @@
         "blockComment": ["{#", "#}"]
     },
     // symbols used as brackets
-    "brackets": [["{", "}"], ["[", "]"], ["(", ")"]],
-    "exclude": ["node_modules", ".vscode-test"]
+    "brackets": [["{", "}"], ["[", "]"], ["(", ")"]]
 }

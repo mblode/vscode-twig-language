@@ -1,27 +1,51 @@
-# VSCode Twig Language
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
+    <img src="images/icon.png" alt="" width=100 height=100>
+  </a>
 
-Snippets, Syntax Highlighting, Hover, and Formatting for Twig.
+  <h3 align="center">VSCode Twig Language</h3>
 
-- [PrettyDiff code formatter for Twig files](#prettydiff-code-formatter-for-twig-files)
-- [Craft CMS/Twig code snippets](#prettydiff-code-formatter-for-twig-files)
-- [Twig syntax highlighting and language support](#prettydiff-code-formatter-for-twig-files)
-- [Information about Twig code on hover](#prettydiff-code-formatter-for-twig-files)
+  <p align="center">
+    Visual Studio Code extension with snippets, syntax highlighting, hover, and formatting for Twig.
+  </p>
+</p>
+
+---
+
+## Table of contents
+
+- [Installation](#installation)
+- [Documentation](#documentation)
+- [Optional VSCode Config](#optional-vscode-config)
+- [Contribute](#contribute)
+- [Running extension locally](#running-extension-locally)
+- [Copyright and license](#copyright-and-license)
 
 ## Installation
 
-Install through VS Code extensions. Search for `Twig Language`
+Install through Visual Studio Code extensions. Search for `Twig Language`
 
 [Visual Studio Code Market Place: Twig Language](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language)
 
-Can also be installed using
+It can also be installed using:
 
 ```
 ext install mblode.twig-language
 ```
 
-## PrettyDiff code formatter for Twig files
+## Documentation
 
-### Using Command Palette (CMD/CTRL + Shift + P)
+Twig Language is a Visual Studio Code extension that provides [snippets](), [syntax highlighting](), [hover](), and [formatting]() for the Twig file format.
+
+### Twig syntax highlighting and language support
+
+This extension provides language support for the Twig syntax.
+
+### Code formatter/beautifier for Twig files
+
+Using PrettyDiff, this extension implements the only working code formatter for Twig files in VSCode.
+
+#### Using Command Palette (CMD/CTRL + Shift + P)
 
 ```
 1. CMD + Shift + P -> Format Document
@@ -32,9 +56,11 @@ OR
 2. CMD + Shift + P -> Format Selection
 ```
 
-## Craft CMS/Twig code snippets
+### Craft CMS/Twig code snippets
 
-### Generic Triggers
+Adds a set of Craft CMS/Twig code snippets to use in your Twig templates.
+
+#### Generic Triggers
 
 ```twig
 
@@ -77,7 +103,7 @@ endspaceless      {% endspaceless %}
 endverbatim       {% endverbatim %}
 ```
 
-### Craft Triggers
+#### Craft Triggers
 
 ```twig
 asset                    craft.assets.first()
@@ -143,7 +169,7 @@ dd                      <pre>{{ dump() }}</pre>{% exit %}
 dump                    <pre>{{ dump() }}</pre>
 ```
 
-### Example Forms
+#### Example Forms
 
 ```
 formlogin                Example login form
@@ -155,15 +181,11 @@ formsearch               Example search form
 formsearchresults        Example search form results
 ```
 
-## Twig syntax highlighting and language support
+### Information about Twig code on hover
 
-An extension for VS Code which provides support for the Twig syntax.
+VSCode Twig language shows information about the symbol/object that's below the mouse cursor when you hover within Twig files.
 
-## Information about Twig code on hover
-
-Hovers show information about the symbol/object that's below the mouse cursor for Twig files.
-
-### Optional VSCode Config
+## Optional VSCode Config
 
 Optionally add the following code to your VSCode user settings so that every *.html file is recognised as the Twig language mode.
 
@@ -191,13 +213,13 @@ Edit your User Settings to automatically format documents (E.g. *.twig) when you
 
 Feel free to open issues or Pull Requests!
 
-### Running extension locally
+## Running extension locally
 
-- Open this repository inside VSCode
-- `yarn install` or `npm install` in your terminal
-- Debug sidebar
-- `Launch Extension`
+1. Open this repository inside VSCode
+2. `yarn install` or `npm install` in your terminal
+3. Debug sidebar
+4. `Launch Extension`
 
-## License
+## Copyright and license
 
 MIT © [Matthew Blode](https://matthewblode.com)
