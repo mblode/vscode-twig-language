@@ -12,7 +12,6 @@ const prettyDiff = (document, range, options) => {
         insize: options.tabSize,
         newline: true,
         objsort: 'none',
-        unformatted: true,
         wrap: 250,
         methodchain: 'chain',
         bracepadding: false,
@@ -39,12 +38,9 @@ function activate(context) {
                     options,
                     token
                 ) {
-                    const rng = new vscode.Range(
-                        0,
-                        0,
-                        Number.MAX_VALUE,
-                        Number.MAX_VALUE
-                    );
+                    var start = new vscode.Position(0, 0);
+                    var end = new vscode.Position(document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length);
+                    const rng = new vscode.Range(start, end);
                     return prettyDiff(document, rng, options);
                 }
             })
