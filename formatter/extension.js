@@ -12,12 +12,11 @@ const prettyDiff = (document, range, options) => {
         insize: options.tabSize,
         newline: true,
         objsort: 'none',
-        wrap: 250,
+        wrap: 0,
         methodchain: 'chain',
         bracepadding: false,
         space: false,
-        endcomma: false,
-
+        endcomma: false
     });
 
     result.push(vscode.TextEdit.replace(range, newText));
@@ -39,7 +38,10 @@ function activate(context) {
                     token
                 ) {
                     var start = new vscode.Position(0, 0);
-                    var end = new vscode.Position(document.lineCount - 1, document.lineAt(document.lineCount - 1).text.length);
+                    var end = new vscode.Position(
+                        document.lineCount - 1,
+                        document.lineAt(document.lineCount - 1).text.length
+                    );
                     const rng = new vscode.Range(start, end);
                     return prettyDiff(document, rng, options);
                 }
