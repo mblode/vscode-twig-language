@@ -1,6 +1,11 @@
 # VSCode Twig Language
 
-Syntax highlighting, Snippets, and Pretty Diff formatting for Twig.
+Snippets, Syntax Highlighting, Hover, and Formatting for Twig.
+
+- [PrettyDiff code formatter for Twig files](#prettydiff-code-formatter-for-twig-files)
+- [Craft CMS/Twig code snippets](#prettydiff-code-formatter-for-twig-files)
+- [Twig syntax highlighting and language support](#prettydiff-code-formatter-for-twig-files)
+- [Information about Twig code on hover](#prettydiff-code-formatter-for-twig-files)
 
 ## Installation
 
@@ -21,16 +26,13 @@ ext install mblode.twig-language
 ```
 1. CMD + Shift + P -> Format Document
 ```
+OR
+```
+1. Select the text you want to Prettify
+2. CMD + Shift + P -> Format Selection
+```
 
-### Custom keybindings
-
-If you don't like the defaults, you can rebind `editor.action.formatDocument` in the keyboard shortcuts menu of vscode.
-
-### Format On Save
-
-Respects `editor.formatOnSave` setting.
-
-## Craft CMS/Twig Snippets
+## Craft CMS/Twig code snippets
 
 ### Generic Triggers
 
@@ -153,9 +155,13 @@ formsearch               Example search form
 formsearchresults        Example search form results
 ```
 
-## Twig syntax highlighting
+## Twig syntax highlighting and language support
 
 An extension for VS Code which provides support for the Twig syntax.
+
+## Information about Twig code on hover
+
+Hovers show information about the symbol/object that's below the mouse cursor for Twig files.
 
 ### Optional VSCode Config
 
@@ -167,11 +173,25 @@ Optionally add the following code to your VSCode user settings so that every *.h
 },
 ```
 
+Ensure that Emmet works with Twig files.
+
+```
+"emmet.includeLanguages": {
+    "twig": "html"
+},
+```
+
+Edit your User Settings to automatically format documents (E.g. *.twig) when you save your file.
+
+```
+"editor.formatOnSave": true,
+```
+
 ## Contribute
 
 Feel free to open issues or Pull Requests!
 
-### Running extension
+### Running extension locally
 
 - Open this repository inside VSCode
 - `yarn install` or `npm install` in your terminal
