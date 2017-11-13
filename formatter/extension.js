@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const prettydiff = require('./libs/prettydiff');
+const prettydiff = require('prettydiff2');
 
 const prettyDiff = (document, range, options) => {
     const result = [];
@@ -7,17 +7,18 @@ const prettyDiff = (document, range, options) => {
 
     var newText = prettydiff({
         source: content,
-        lang: 'auto',
+        lang: 'twig',
         mode: 'beautify',
-        langdefault: 'markup',
+        insize: options.tabSize,
         newline: true,
         objsort: 'none',
         unformatted: true,
-        wrap: 0,
-        insize: options.tabSize,
+        wrap: 250,
         methodchain: 'chain',
-        html: true,
-        Twig: true
+        bracepadding: false,
+        space: false,
+        endcomma: false,
+
     });
 
     result.push(vscode.TextEdit.replace(range, newText));

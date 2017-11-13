@@ -1659,6 +1659,10 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
+prettydiff2@^2.2.7:
+  version "2.2.7"
+  resolved "https://registry.yarnpkg.com/prettydiff2/-/prettydiff2-2.2.7.tgz#1d4f4f5333911c20a3951fee0a34a3540ddf13ff"
+
 process-nextick-args@^1.0.6, process-nextick-args@~1.0.6:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"

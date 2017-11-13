@@ -1,8 +1,7 @@
 {
     "name": "twig-language",
     "displayName": "Twig Language",
-    "description":
-        "Syntax highlighting, Snippets, and PrettyDiff formatting for Twig",
+    "description": "Syntax highlighting, Snippets, and PrettyDiff formatting for Twig",
     "version": "0.1.4",
     "publisher": "mblode",
     "author": {
@@ -22,16 +21,34 @@
     "engines": {
         "vscode": "^1.17.0"
     },
-    "categories": ["Languages", "Snippets", "Other"],
-    "keywords": ["php", "twig", "snippets", "craft", "beautify"],
-    "activationEvents": ["onLanguage:twig"],
+    "categories": [
+        "Languages",
+        "Snippets",
+        "Other"
+    ],
+    "keywords": [
+        "php",
+        "twig",
+        "snippets",
+        "craft",
+        "beautify"
+    ],
+    "activationEvents": [
+        "onLanguage:twig"
+    ],
     "main": "./formatter/extension",
     "contributes": {
         "languages": [
             {
                 "id": "twig",
-                "aliases": ["HTML (Twig)", "twig"],
-                "extensions": [".twig", ".html.twig"],
+                "aliases": [
+                    "HTML (Twig)",
+                    "twig"
+                ],
+                "extensions": [
+                    ".twig",
+                    ".html.twig"
+                ],
                 "configuration": "./twig.configuration.json"
             }
         ],
@@ -56,5 +73,8 @@
         "eslint-config-prettier": "^2.7.0",
         "typescript": "^2.6.1",
         "vscode": "^1.1.6"
+    },
+    "dependencies": {
+        "prettydiff2": "^2.2.7"
     }
 }
