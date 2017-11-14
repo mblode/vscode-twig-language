@@ -1,14 +1,11 @@
-<p align="center">
-  <a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
-    <img src="https://github.com/mblode/vscode-twig-language/blob/master/images/icon.png?raw=true" alt="" width=100 height=100>
-  </a>
 
-  <h3 align="center">VSCode Twig Language</h3>
+<a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
+  <img src="https://github.com/mblode/vscode-twig-language/blob/master/images/icon.png?raw=true" alt="" width=100 height=100>
+</a>
 
-  <p align="center">
-    Visual Studio Code extension with snippets, syntax highlighting, hover, and formatting for Twig.
-  </p>
-</p>
+### VSCode Twig Language
+
+Visual Studio Code extension with snippets, syntax highlighting, hover, and formatting for Twig.
 
 ## Table of contents
 
