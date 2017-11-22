@@ -24,7 +24,7 @@
     },
     "categories": ["Languages", "Snippets", "Other"],
     "keywords": ["php", "twig", "snippets", "craft", "beautify"],
-    "activationEvents": ["onLanguage:twig"],
+    "activationEvents": ["onLanguage:twig", "onLanguage:html"],
     "main": "./src/extension",
     "contributes": {
         "languages": [
