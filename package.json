@@ -3,7 +3,7 @@
     "displayName": "Twig Language",
     "description":
         "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "publisher": "mblode",
     "author": {
         "name": "Matthew Blode",
@@ -31,14 +31,25 @@
             {
                 "id": "html",
                 "aliases": ["HTML", "twig"],
-                "extensions": [".twig",".html"],
+                "extensions": [".twig", ".html"],
+                "configuration": "./twig.configuration.json"
+            },
+            {
+                "id": "twig",
+                "aliases": ["HTML (Twig)", "twig"],
+                "extensions": [".twig", ".html.twig"],
                 "configuration": "./twig.configuration.json"
             }
         ],
         "grammars": [
             {
-			    "language": "html",
-			    "scopeName": "text.html.twig",
+                "language": "html",
+                "scopeName": "text.html.twig",
+                "path": "./src/syntaxes/twig.tmLanguage"
+            },
+            {
+                "language": "twig",
+                "scopeName": "text.html.twig",
                 "path": "./src/syntaxes/twig.tmLanguage"
             }
         ],
@@ -47,58 +58,7 @@
                 "language": "html",
                 "path": "./src/snippets/snippets.json"
             }
-        ],
-        "contributes": {
-            "configuration": {
-                "type": "object",
-                "title": "Twig Language configuration",
-                "properties": {
-                    "twig-language.snippets": {
-                        "type": "boolean",
-                        "default": true,
-                        "description":
-                            "Whether to enable/disable Twig snippets."
-                    },
-                    "twig-language.hover": {
-                        "type": "boolean",
-                        "default": true,
-                        "description": "Whether to enable/disable Twig hover."
-                    },
-                    "twig-language.formatting": {
-                        "type": "boolean",
-                        "default": true,
-                        "description":
-                            "Whether to enable/disable Twig PrettyDiff formatting."
-                    },
-                    "twig-language.formattingNewline": {
-                        "type": "boolean",
-                        "default": true,
-                        "description":
-                            "Whether to enable/disable Twig syntax highlighting."
-                    },
-                    "twig-language.formattingObjsort": {
-                        "type": "string",
-                        "enum": ["all", "none"],
-                        "default": "none",
-                        "description":
-                            "Sorts properties of objects in JavaScript and/or CSS and/or attributs in HTML. The accepted values determine which language this option should be applied."
-                    },
-                    "twig-language.formattingWrap": {
-                        "type": "integer",
-                        "default": 0,
-                        "description":
-                            "In a markup document this option sets how many columns wide text content may be before wrapping onto a new line."
-                    },
-                    "twig-language.formattingMethodchain": {
-                        "type": "string",
-                        "enum": ["chain", "indent", "none"],
-                        "default": "none",
-                        "description":
-                            "Whether consecutive methods should be continuously chained onto a single line of code."
-                    }
-                }
-            }
-        }
+        ]
     },
     "capabilities": {
         "hoverProvider": "true"

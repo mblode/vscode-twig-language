@@ -5,7 +5,7 @@ const snippetsArr = require('./hover/filters.json');
 const functionsArr = require('./hover/functions.json');
 const twigArr = require('./hover/twig.json');
 
-const vscodeConfig = vscode.workspace.getConfiguration('twig-language');
+// const vscodeConfig = vscode.workspace.getConfiguration('twig-language');s
 
 function createHover(snippet) {
     const example = typeof snippet.example == 'undefined' ? '' : snippet.example;
@@ -43,7 +43,7 @@ function activate(context) {
     registerDocType('twig');
 
     function registerDocType(type) {
-        if (vscodeConfig.hover === true) {
+        // if (vscodeConfig.hover === true) {
             context.subscriptions.push(
                 vscode.languages.registerHoverProvider(type, {
                     provideHover(document, position, token) {
@@ -79,9 +79,9 @@ function activate(context) {
                     }
                 })
             );
-        }
+        // }
 
-        if (vscodeConfig.formatting === true) {
+        // if (vscodeConfig.formatting === true) {
             context.subscriptions.push(
                 vscode.languages.registerDocumentFormattingEditProvider(type, {
                     provideDocumentFormattingEdits: function(
@@ -124,7 +124,7 @@ function activate(context) {
                     }
                 })
             );
-        }
+        // }
 
     }
 }
