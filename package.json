@@ -29,25 +29,76 @@
     "contributes": {
         "languages": [
             {
-                "id": "twig",
-                "aliases": ["HTML (Twig)", "twig"],
-                "extensions": [".twig", ".html.twig"],
+                "id": "html",
+                "aliases": ["HTML", "twig"],
+                "extensions": [".twig",".html"],
                 "configuration": "./twig.configuration.json"
             }
         ],
         "grammars": [
             {
-                "language": "twig",
-                "scopeName": "text.html.twig",
+			    "language": "html",
+			    "scopeName": "text.html.twig",
                 "path": "./src/syntaxes/twig.tmLanguage"
             }
         ],
         "snippets": [
             {
-                "language": "twig",
+                "language": "html",
                 "path": "./src/snippets/snippets.json"
             }
-        ]
+        ],
+        "contributes": {
+            "configuration": {
+                "type": "object",
+                "title": "Twig Language configuration",
+                "properties": {
+                    "twig-language.snippets": {
+                        "type": "boolean",
+                        "default": true,
+                        "description":
+                            "Whether to enable/disable Twig snippets."
+                    },
+                    "twig-language.hover": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "Whether to enable/disable Twig hover."
+                    },
+                    "twig-language.formatting": {
+                        "type": "boolean",
+                        "default": true,
+                        "description":
+                            "Whether to enable/disable Twig PrettyDiff formatting."
+                    },
+                    "twig-language.formattingNewline": {
+                        "type": "boolean",
+                        "default": true,
+                        "description":
+                            "Whether to enable/disable Twig syntax highlighting."
+                    },
+                    "twig-language.formattingObjsort": {
+                        "type": "string",
+                        "enum": ["all", "none"],
+                        "default": "none",
+                        "description":
+                            "Sorts properties of objects in JavaScript and/or CSS and/or attributs in HTML. The accepted values determine which language this option should be applied."
+                    },
+                    "twig-language.formattingWrap": {
+                        "type": "integer",
+                        "default": 0,
+                        "description":
+                            "In a markup document this option sets how many columns wide text content may be before wrapping onto a new line."
+                    },
+                    "twig-language.formattingMethodchain": {
+                        "type": "string",
+                        "enum": ["chain", "indent", "none"],
+                        "default": "none",
+                        "description":
+                            "Whether consecutive methods should be continuously chained onto a single line of code."
+                    }
+                }
+            }
+        }
     },
     "capabilities": {
         "hoverProvider": "true"
