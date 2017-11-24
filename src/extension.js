@@ -29,7 +29,8 @@ const prettyDiff = (document, range, options) => {
         newline: true,
         objsort: 'none',
         wrap: 0,
-        methodchain: 'none'
+        methodchain: 'none',
+        ternaryline: true
     });
 
     result.push(vscode.TextEdit.replace(range, newText));
