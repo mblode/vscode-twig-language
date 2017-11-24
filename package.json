@@ -30,25 +30,14 @@
         "languages": [
             {
                 "id": "html",
-                "aliases": ["HTML", "twig"],
-                "extensions": [".twig", ".html"],
-                "configuration": "./twig.configuration.json"
-            },
-            {
-                "id": "twig",
-                "aliases": ["HTML (Twig)", "twig"],
-                "extensions": [".twig", ".html.twig"],
+                "aliases": ["HTML", "HTML (Twig)", "twig"],
+                "extensions": [".twig", ".html", ".html.twig"],
                 "configuration": "./twig.configuration.json"
             }
         ],
         "grammars": [
             {
                 "language": "html",
-                "scopeName": "text.html.twig",
-                "path": "./src/syntaxes/twig.tmLanguage"
-            },
-            {
-                "language": "twig",
                 "scopeName": "text.html.twig",
                 "path": "./src/syntaxes/twig.tmLanguage"
             }

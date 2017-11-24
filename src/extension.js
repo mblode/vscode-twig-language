@@ -7,12 +7,12 @@ const twigArr = require('./hover/twig.json');
 
 // const vscodeConfig = vscode.workspace.getConfiguration('twig-language');s
 
-function createHover(snippet) {
+function createHover(snippet, type) {
     const example = typeof snippet.example == 'undefined' ? '' : snippet.example;
     const description =
         typeof snippet.description == 'undefined' ? '' : snippet.description;
     return new vscode.Hover({
-        language: 'twig',
+        language: type,
         value: description + '\n\n' + example
     });
 }
@@ -40,7 +40,8 @@ function activate(context) {
     const active = vscode.window.activeTextEditor;
     if (!active || !active.document) return;
 
-    registerDocType('twig');
+    // registerDocType('twig');
+    registerDocType('html');
 
     function registerDocType(type) {
         // if (vscodeConfig.hover === true) {
@@ -55,7 +56,7 @@ function activate(context) {
                                 snippetsArr[snippet].prefix == word ||
                                 snippetsArr[snippet].hover == word
                             ) {
-                                return createHover(snippetsArr[snippet]);
+                                return createHover(snippetsArr[snippet], type);
                             }
                         }
 
@@ -64,7 +65,7 @@ function activate(context) {
                                 functionsArr[snippet].prefix == word ||
                                 functionsArr[snippet].hover == word
                             ) {
-                                return createHover(functionsArr[snippet]);
+                                return createHover(functionsArr[snippet], type);
                             }
                         }
 
@@ -73,7 +74,7 @@ function activate(context) {
                                 twigArr[snippet].prefix == word ||
                                 twigArr[snippet].hover == word
                             ) {
-                                return createHover(twigArr[snippet]);
+                                return createHover(twigArr[snippet], type);
                             }
                         }
                     }
