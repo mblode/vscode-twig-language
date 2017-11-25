@@ -5,10 +5,11 @@ const snippetsArr = require('./hover/filters.json');
 const functionsArr = require('./hover/functions.json');
 const twigArr = require('./hover/twig.json');
 
-// const vscodeConfig = vscode.workspace.getConfiguration('twig-language');s
+const vscodeConfig = vscode.workspace.getConfiguration('twig-language');
 
 function createHover(snippet, type) {
-    const example = typeof snippet.example == 'undefined' ? '' : snippet.example;
+    const example =
+        typeof snippet.example == 'undefined' ? '' : snippet.example;
     const description =
         typeof snippet.description == 'undefined' ? '' : snippet.description;
     return new vscode.Hover({
@@ -26,11 +27,11 @@ const prettyDiff = (document, range, options) => {
         lang: 'twig',
         mode: 'beautify',
         insize: options.tabSize,
-        newline: true,
-        objsort: 'none',
-        wrap: 0,
-        methodchain: 'none',
-        ternaryline: true
+        newline: vscodeConfig.newLine,
+        objsort: vscodeConfig.methodChain,
+        wrap: vscodeConfig.wrap,
+        methodchain: vscodeConfig.methodchain,
+        ternaryline: vscodeConfig.ternaryLine,
     });
 
     result.push(vscode.TextEdit.replace(range, newText));
@@ -45,7 +46,7 @@ function activate(context) {
     registerDocType('html');
 
     function registerDocType(type) {
-        // if (vscodeConfig.hover === true) {
+        if (vscodeConfig.hover === true) {
             context.subscriptions.push(
                 vscode.languages.registerHoverProvider(type, {
                     provideHover(document, position, token) {
@@ -81,9 +82,9 @@ function activate(context) {
                     }
                 })
             );
-        // }
+        }
 
-        // if (vscodeConfig.formatting === true) {
+        if (vscodeConfig.formatting === true) {
             context.subscriptions.push(
                 vscode.languages.registerDocumentFormattingEditProvider(type, {
                     provideDocumentFormattingEdits: function(
@@ -103,31 +104,33 @@ function activate(context) {
             );
 
             context.subscriptions.push(
-                vscode.languages.registerDocumentRangeFormattingEditProvider(type, {
-                    provideDocumentRangeFormattingEdits: function(
-                        document,
-                        range,
-                        options,
-                        token
-                    ) {
-                        let end = range.end;
-                        if (end.character === 0) {
-                            end = end.translate(-1, Number.MAX_VALUE);
-                        } else {
-                            end = end.translate(0, Number.MAX_VALUE);
+                vscode.languages.registerDocumentRangeFormattingEditProvider(
+                    type,
+                    {
+                        provideDocumentRangeFormattingEdits: function(
+                            document,
+                            range,
+                            options,
+                            token
+                        ) {
+                            let end = range.end;
+                            if (end.character === 0) {
+                                end = end.translate(-1, Number.MAX_VALUE);
+                            } else {
+                                end = end.translate(0, Number.MAX_VALUE);
+                            }
+
+                            const rng = new vscode.Range(
+                                new vscode.Position(range.start.line, 0),
+                                end
+                            );
+
+                            return prettyDiff(document, rng, options);
                         }
-
-                        const rng = new vscode.Range(
-                            new vscode.Position(range.start.line, 0),
-                            end
-                        );
-
-                        return prettyDiff(document, rng, options);
                     }
-                })
+                )
             );
-        // }
-
+        }
     }
 }
 
