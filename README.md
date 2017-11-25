@@ -181,29 +181,33 @@ formsearch               Example search form
 formsearchresults        Example search form results
 ```
 
-## Optional VSCode Config
+## Settings
 
-Optionally add the following code to your VSCode user settings so that every *.html file is recognised as the Twig language mode.
+*twig-language.hover (default: true)*
+Whether to enable/disable Twig hover.
 
-```
-"files.associations": {
-    "*.html": "twig"
-},
-```
+*twig-language.formatting (default: true)*
+Whether to enable/disable Twig PrettyDiff formatting.
 
-Ensure that Emmet works with Twig files.
+*twig-language.newline (default: true)*
+Whether to insert an empty line at the end of output.
 
-```
-"emmet.includeLanguages": {
-    "twig": "html"
-},
-```
+*twig-language.objSort (default: 'none')*
+Sorts properties of objects attributs in HTML.
+- "all"
+- "none"
 
-Edit your User Settings to automatically format documents (E.g. *.twig) when you save your file.
+*twig-language.wrap (default: 0)*
+How many columns wide text content may be before wrapping onto a new line. The value 0 disables text wrapping.
 
-```
-"editor.formatOnSave": true,
-```
+*twig-language.methodchain (default: 'none')*
+Whether consecutive methods should be continuously chained onto a single line of code.
+- "chain"
+- "indent"
+- "none"
+
+*twig-language.ternaryLine (default: true)*
+Whether to keep ? and : operators of ternary statements on one line of code.
 
 ## Contribute
 
