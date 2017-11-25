@@ -183,30 +183,39 @@ formsearchresults        Example search form results
 
 ## Settings
 
-*twig-language.hover (default: true)*
+**twig-language.hover (default: true)**
+
 Whether to enable/disable Twig hover.
 
-*twig-language.formatting (default: true)*
+**twig-language.formatting (default: true)**
+
 Whether to enable/disable Twig PrettyDiff formatting.
 
-*twig-language.newline (default: true)*
+**twig-language.newline (default: true)**
+
 Whether to insert an empty line at the end of output.
 
-*twig-language.objSort (default: 'none')*
+**twig-language.objSort (default: 'none')**
+
 Sorts properties of objects attributs in HTML.
+
 - "all"
 - "none"
 
-*twig-language.wrap (default: 0)*
+**twig-language.wrap (default: 0)**
+
 How many columns wide text content may be before wrapping onto a new line. The value 0 disables text wrapping.
 
-*twig-language.methodchain (default: 'none')*
+**twig-language.methodchain (default: 'none')**
+
 Whether consecutive methods should be continuously chained onto a single line of code.
+
 - "chain"
 - "indent"
 - "none"
 
-*twig-language.ternaryLine (default: true)*
+**twig-language.ternaryLine (default: true)**
+
 Whether to keep ? and : operators of ternary statements on one line of code.
 
 ## Contribute
