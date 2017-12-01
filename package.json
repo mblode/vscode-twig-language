@@ -32,7 +32,7 @@
                 "id": "html",
                 "aliases": ["HTML", "HTML (Twig)", "twig"],
                 "extensions": [".twig", ".html", ".html.twig"],
-                "configuration": "./twig.configuration.json"
+                "configuration": "./src/languages/twig.configuration.json"
             }
         ],
         "grammars": [

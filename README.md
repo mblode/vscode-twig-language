@@ -5,7 +5,12 @@
 
 ### VSCode Twig Language
 
-Visual Studio Code extension with snippets, syntax highlighting, hover, and formatting for Twig.
+- Syntax highlighting
+- Snippet
+- Emmet
+- Formatting
+- Hover
+- HTML intellisense
 
 ## Table of contents
 
