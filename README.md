@@ -6,9 +6,9 @@
 ### VSCode Twig Language
 
 - Syntax highlighting
-- Snippet
+- Snippets
 - Emmet
-- Formatting
+- Pretty Diff Formatting
 - Hover
 - HTML intellisense
 

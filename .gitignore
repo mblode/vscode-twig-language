@@ -4,3 +4,4 @@ node_modules
 typings/**
 out/test/**
 test/**
+*.DS_Store
