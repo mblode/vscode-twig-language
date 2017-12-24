@@ -63,6 +63,12 @@
                     "description":
                         "Whether to enable/disable Twig PrettyDiff formatting."
                 },
+                "twig-language.tabSize": {
+                    "type": "integer",
+                    "default": 4,
+                    "description":
+                        "Stores the number of times the inchar value must repeat to comprise a single indentation."
+                },
                 "twig-language.newline": {
                     "type": "boolean",
                     "default": true,

@@ -26,7 +26,7 @@ const prettyDiff = (document, range, options) => {
         source: content,
         lang: 'twig',
         mode: 'beautify',
-        insize: options.tabSize,
+        insize: vscodeConfig.tabSize,
         newline: vscodeConfig.newLine,
         objsort: vscodeConfig.methodChain,
         wrap: vscodeConfig.wrap,
