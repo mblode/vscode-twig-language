@@ -20,7 +20,7 @@ Install through Visual Studio Code extensions. Search for `Twig Language`
 
 ## Documentation
 
-Twig Language is a Visual Studio Code extension that provides [snippets](), [syntax highlighting](), [hover](), and [formatting]() for the Twig file format.
+Twig Language is a Visual Studio Code extension that provides snippets, syntax highlighting, hover, and formatting for the Twig file format.
 
 ### Twig syntax highlighting and language support
 
