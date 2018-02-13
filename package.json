@@ -3,7 +3,7 @@
     "displayName": "Twig Language",
     "description":
         "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-    "version": "0.2.8",
+    "version": "0.2.9",
     "publisher": "mblode",
     "author": {
         "name": "Matthew Blode",
@@ -24,13 +24,13 @@
     },
     "categories": ["Languages", "Snippets", "Other"],
     "keywords": ["php", "twig", "snippets", "craft", "beautify"],
-    "activationEvents": ["onLanguage:html"],
+    "activationEvents": ["*"],
     "main": "./src/extension",
     "contributes": {
         "languages": [
             {
                 "id": "html",
-                "aliases": ["HTML", "HTML (Twig)", "twig"],
+                "aliases": ["HTML", "twig"],
                 "extensions": [".twig", ".html", ".html.twig"],
                 "configuration": "./src/languages/twig.configuration.json"
             }
