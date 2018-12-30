@@ -1,11 +1,11 @@
 const vscode = require('vscode');
-const prettydiff = require('prettydiff2');
+let prettydiff = require('prettydiff');
 
 const snippetsArr = require('./hover/filters.json');
 const functionsArr = require('./hover/functions.json');
 const twigArr = require('./hover/twig.json');
 
-const vscodeConfig = vscode.workspace.getConfiguration('twig-language');
+const twigConfig = vscode.workspace.getConfiguration('twig-language');
 
 function createHover(snippet, type) {
     const example =
@@ -21,20 +21,30 @@ function createHover(snippet, type) {
 const prettyDiff = (document, range, options) => {
     const result = [];
     const content = document.getText(range);
+    let output = "";
 
-    const newText = prettydiff({
-        source: content,
-        lang: 'twig',
-        mode: 'beautify',
-        insize: vscodeConfig.tabSize,
-        newline: vscodeConfig.newLine,
-        objsort: vscodeConfig.methodChain,
-        wrap: vscodeConfig.wrap,
-        methodchain: vscodeConfig.methodchain,
-        ternaryline: vscodeConfig.ternaryLine,
-    });
+    let settings = prettydiff.defaults;
 
-    result.push(vscode.TextEdit.replace(range, newText));
+    settings.api = "dom";
+    settings.language = "twig";
+    settings.lexer = "markup";
+    settings.mode = "beautify";
+    settings.source = content;
+    settings.newline = twigConfig.newLine;
+    settings.objsort = twigConfig.methodChain;
+    settings.wrap = twigConfig.wrap;
+    settings.methodchain = twigConfig.methodchain;
+    settings.ternaryline = twigConfig.ternaryLine;
+
+    if (twigConfig.tabSize == 0) {
+        settings.indent_size = vscode.workspace.getConfiguration().get('editor.tabSize');
+    } else {
+        settings.indent_size = twigConfig.tabSize;
+    }
+
+    output = prettydiff.mode(settings);
+
+    result.push(vscode.TextEdit.replace(range, output));
     return result;
 };
 
@@ -45,7 +55,7 @@ function activate(context) {
     registerDocType('html');
 
     function registerDocType(type) {
-        if (vscodeConfig.hover === true) {
+        if (twigConfig.hover === true) {
             context.subscriptions.push(
                 vscode.languages.registerHoverProvider(type, {
                     provideHover(document, position, token) {
@@ -83,7 +93,7 @@ function activate(context) {
             );
         }
 
-        if (vscodeConfig.formatting === true) {
+        if (twigConfig.formatting === true) {
             context.subscriptions.push(
                 vscode.languages.registerDocumentFormattingEditProvider(type, {
                     provideDocumentFormattingEdits: function(
@@ -112,19 +122,7 @@ function activate(context) {
                             options,
                             token
                         ) {
-                            let end = range.end;
-                            if (end.character === 0) {
-                                end = end.translate(-1, Number.MAX_VALUE);
-                            } else {
-                                end = end.translate(0, Number.MAX_VALUE);
-                            }
-
-                            const rng = new vscode.Range(
-                                new vscode.Position(range.start.line, 0),
-                                end
-                            );
-
-                            return prettyDiff(document, rng, options);
+                            return prettyDiff(document, range, options);
                         }
                     }
                 )
