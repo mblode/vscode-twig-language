@@ -2,7 +2,7 @@
 	"name": "twig-language",
 	"displayName": "Twig Language",
 	"description": "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"publisher": "mblode",
 	"author": {
 		"name": "Matthew Blode",
@@ -87,7 +87,7 @@
 				},
 				"twig-language.newline": {
 					"type": "boolean",
-					"default": false,
+					"default": true,
 					"description": "Whether to insert an empty line at the end of output."
 				},
 				"twig-language.objSort": {
