@@ -2,7 +2,7 @@
 	"name": "twig-language",
 	"displayName": "Twig Language",
 	"description": "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-	"version": "0.4.0",
+	"version": "0.4.2",
 	"publisher": "mblode",
 	"author": {
 		"name": "Matthew Blode",
@@ -19,8 +19,8 @@
 	},
 	"icon": "images/icon.png",
 	"engines": {
-        "vscode": "^1.30.0"
-    },
+		"vscode": "^1.30.0"
+	},
 	"categories": [
 		"Programming Languages",
 		"Snippets",
@@ -81,22 +81,18 @@
 					"description": "Whether to enable/disable Twig PrettyDiff formatting."
 				},
 				"twig-language.tabSize": {
-                    "type": "integer",
-                    "default": 0,
-                    "description": " 0 will default to the editor's tab size. Stores the number of 'inchar' values to comprise a single indentation."
-                },
+					"type": "integer",
+					"default": 0,
+					"description": " 0 will default to the editor's tab size. Stores the number of 'inchar' values to comprise a single indentation."
+				},
 				"twig-language.newline": {
 					"type": "boolean",
-					"default": true,
+					"default": false,
 					"description": "Whether to insert an empty line at the end of output."
 				},
 				"twig-language.objSort": {
-					"type": "string",
-					"enum": [
-						"all",
-						"none"
-					],
-					"default": "none",
+					"type": "boolean",
+					"default": false,
 					"description": "Sorts properties of objects attributs in HTML."
 				},
 				"twig-language.wrap": {
@@ -105,13 +101,8 @@
 					"description": "How many columns wide text content may be before wrapping onto a new line. The value 0 disables text wrapping."
 				},
 				"twig-language.methodchain": {
-					"type": "string",
-					"enum": [
-						"chain",
-						"indent",
-						"none"
-					],
-					"default": "none",
+					"type": "integer",
+					"default": 0,
 					"description": "Whether consecutive methods should be continuously chained onto a single line of code."
 				},
 				"twig-language.ternaryLine": {
@@ -126,14 +117,14 @@
 		"hoverProvider": "true"
 	},
 	"devDependencies": {
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^8.10.25",
-        "eslint": "^4.11.0",
-        "eslint-config-prettier": "^2.7.0",
-        "typescript": "^2.6.1",
-        "vscode": "^1.1.21"
-    },
-    "dependencies": {
-        "prettydiff": "^100.0.0"
-    }
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^8.10.25",
+		"eslint": "^4.11.0",
+		"eslint-config-prettier": "^2.7.0",
+		"typescript": "^2.6.1",
+		"vscode": "^1.1.21"
+	},
+	"dependencies": {
+		"prettydiff": "^100.0.0"
+	}
 }
