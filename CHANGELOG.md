@@ -32,4 +32,43 @@ All notable changes to this project will be documented in this file.
 
 ## [0.2.11] - 2018-01-20
 
+### Added
+
+- Option to disable formatter
+
+### Changed
+
+- Experiment with activation events
+- Fix configuration options
+
 ## [0.1.5] - 2017-11-13
+
+### Added
+
+- Add options for configuration in VS Code
+- Format selection functionality
+- Add Prettty Diff 2 as an NPM package
+- Create hover features for VS Code
+
+### Changed
+
+- Update readme
+- Fix gitignore
+- Change extension.js to add configuration to Pretty Diff
+
+### Removed
+
+- Remove Pretty Diff 2 as a library
+
+## [0.1.1] - 2017-11-12
+
+### Added
+
+- Create a comprehensive readme file
+- Initial changelog
+- Add Craft/Twig snippets
+- Syntax highlighting for twig files
+- Initialise VS Code extension using Yeoman
+- Add icon for Twig Language extension
+- Use Pretty Diff 2 as the primary Twig formatter
+- Create extension.js file
