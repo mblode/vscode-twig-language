@@ -229,13 +229,13 @@
     },
     "dojs": {
         "prefix": "dojs",
-        "body": "{% do view.registerJsFile \"${1:/path/to/file}\" %}$0",
+        "body": "{% do view.registerJsFile \"${1:url}\" %}$0",
         "description": "do js",
         "scope": "text.html.twig"
     },
     "docss": {
         "prefix": "docss",
-        "body": "{% do view.registerCssFile \"${1:/path/to/file}\" %}$0",
+        "body": "{% do view.registerCssFile \"${1:url}\" %}$0",
         "description": "do css",
         "scope": "text.html.twig"
     },
