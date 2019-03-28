@@ -35,6 +35,8 @@ const prettyDiff = (document, range, options) => {
     settings.wrap = twigConfig.wrap;
     settings.method_chain = twigConfig.methodchain;
     settings.ternary_line = twigConfig.ternaryLine;
+    settings.preserve = twigConfig.preserve;
+    settings.space_close = twigConfig.spaceClose;
 
     if (twigConfig.tabSize == 0) {
         settings.indent_size = vscode.workspace.getConfiguration().get('editor.tabSize');
@@ -96,7 +98,7 @@ function activate(context) {
         if (twigConfig.formatting === true) {
             context.subscriptions.push(
                 vscode.languages.registerDocumentFormattingEditProvider(type, {
-                    provideDocumentFormattingEdits: function(
+                    provideDocumentFormattingEdits: function (
                         document,
                         options,
                         token
@@ -116,7 +118,7 @@ function activate(context) {
                 vscode.languages.registerDocumentRangeFormattingEditProvider(
                     type,
                     {
-                        provideDocumentRangeFormattingEdits: function(
+                        provideDocumentRangeFormattingEdits: function (
                             document,
                             range,
                             options,
