@@ -1,4 +1,3 @@
-
 <a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
   <img src="https://github.com/mblode/vscode-twig-language/blob/master/images/icon.png?raw=true" alt="" width=100 height=100>
 </a>
