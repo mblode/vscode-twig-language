@@ -2,8 +2,9 @@
     "name": "twig-language",
     "displayName": "Twig Language",
     "description": "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-    "version": "0.6.5",
+    "version": "0.7.0",
     "publisher": "mblode",
+    "license": "MIT",
     "author": {
         "name": "Matthew Blode",
         "email": "m.blode@gmail.com",
@@ -36,7 +37,7 @@
     "activationEvents": [
         "*"
     ],
-    "main": "./src/extension",
+    "main": "./extension/index",
     "contributes": {
         "languages": [
             {
@@ -57,7 +58,14 @@
             {
                 "language": "html",
                 "scopeName": "text.html.twig",
-                "path": "./src/syntaxes/twig.tmLanguage"
+                "path": "./src/syntaxes/twig.tmLanguage",
+                "embeddedLanguages": {
+                    "source.json": "json",
+                    "source.css": "css",
+                    "source.css.scss": "scss",
+                    "source.js": "javascript",
+                    "source.ts": "typescript"
+                }
             }
         ],
         "snippets": [
@@ -83,7 +91,7 @@
                 "twig-language.tabSize": {
                     "type": "integer",
                     "default": 0,
-                    "description": " 0 will default to the editor's tab size. Stores the number of 'inchar' values to comprise a single indentation."
+                    "description": "0 will default to the editor's tab size. Stores the number of 'inchar' values to comprise a single indentation."
                 },
                 "twig-language.newline": {
                     "type": "boolean",
@@ -112,7 +120,7 @@
                 },
                 "twig-language.preserve": {
                     "type": "integer",
-                    "default": 1,
+                    "default": 2,
                     "description": "The maximum number of consecutive empty lines to retain."
                 },
                 "twig-language.spaceClose": {
@@ -126,15 +134,22 @@
     "capabilities": {
         "hoverProvider": "true"
     },
+    "scripts": {
+        "build": "rollup -c",
+        "watch": "rollup -c -w"
+    },
     "devDependencies": {
-        "@types/mocha": "^2.2.42",
-        "@types/node": "^8.10.25",
-        "eslint": "^5.15.3",
+        "@types/mocha": "^5.2.6",
+        "@types/node": "^11.12.2",
+        "eslint": "^5.16.0",
         "eslint-config-prettier": "^4.1.0",
-        "typescript": "^3.3.4000",
-        "vscode": "^1.1.32"
+        "typescript": "^3.4.1",
+        "vscode": "^1.1.33"
     },
     "dependencies": {
-        "prettydiff": "^100.2.8"
+        "prettydiff": "^100.2.8",
+        "rollup": "^1.7.4",
+        "rollup-plugin-babel": "^4.3.2",
+        "rollup-plugin-json": "^4.0.0"
     }
 }
