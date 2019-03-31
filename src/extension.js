@@ -32,7 +32,6 @@ const prettyDiff = (document, range) => {
     const source = contents.replace(pattern.matches(), blocks)
     const assign = Object.assign({}, defaults, rules.html, { source })
     const output = prettydiff.mode(assign).replace(pattern.ignored, '')
-    console.log(output)
     result.push(vscode.TextEdit.replace(range, output.trim()));
     return result
 };
