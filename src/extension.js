@@ -7,59 +7,59 @@ import snippetsArr from './hover/filters.json'
 import functionsArr from './hover/functions.json'
 import twigArr from './hover/twig.json'
 
-const twigConfig = vscode.workspace.getConfiguration('twig-language');
+const twigConfig = vscode.workspace.getConfiguration('twig-language')
 
 function createHover(snippet, type) {
     const example =
-        typeof snippet.example == 'undefined' ? '' : snippet.example;
+        typeof snippet.example == 'undefined' ? '' : snippet.example
     const description =
-        typeof snippet.description == 'undefined' ? '' : snippet.description;
+        typeof snippet.description == 'undefined' ? '' : snippet.description
     return new vscode.Hover({
         language: type,
         value: description + '\n\n' + example
-    });
+    })
 }
 
 const blocks = (code, open, name, source, close) => {
-    if (pattern.enforce.includes(name) && open[0] === '{') {
+    // if (pattern.enforce.includes(name) && open[0] === '{') {
         const config = Object.assign({}, defaults, rules[name], { source })
         const pretty = prettydiff.mode(config)
         return pattern.ignore(`${open.trim()}\n\n${pretty.trim()}\n\n${close.trim()}`)
-    } else {
-        return pattern.ignore(`${code}`)
-    }
+    // } else {
+    //     return pattern.ignore(`${code}`)
+    // }
 }
 
 const prettyDiff = (document, range) => {
-    const result = [];
+    const result = []
     const contents = document.getText(range)
     const source = contents.replace(pattern.matches(), blocks)
     const assign = Object.assign({}, defaults, rules.html, { source })
     const output = prettydiff.mode(assign).replace(pattern.ignored, '')
-    result.push(vscode.TextEdit.replace(range, output.trim()));
+    result.push(vscode.TextEdit.replace(range, output.trim()))
     return result
-};
+}
 
 function activate(context) {
-    const active = vscode.window.activeTextEditor;
-    if (!active || !active.document) return;
+    const active = vscode.window.activeTextEditor
+    if (!active || !active.document) return
 
-    registerDocType('html');
+    registerDocType('html')
 
     function registerDocType(type) {
         if (twigConfig.hover === true) {
             context.subscriptions.push(
                 vscode.languages.registerHoverProvider(type, {
                     provideHover(document, position) {
-                        const range = document.getWordRangeAtPosition(position);
-                        const word = document.getText(range);
+                        const range = document.getWordRangeAtPosition(position)
+                        const word = document.getText(range)
 
                         for (const snippet in snippetsArr) {
                             if (
                                 snippetsArr[snippet].prefix == word ||
                                 snippetsArr[snippet].hover == word
                             ) {
-                                return createHover(snippetsArr[snippet], type);
+                                return createHover(snippetsArr[snippet], type)
                             }
                         }
 
@@ -68,7 +68,7 @@ function activate(context) {
                                 functionsArr[snippet].prefix == word ||
                                 functionsArr[snippet].hover == word
                             ) {
-                                return createHover(functionsArr[snippet], type);
+                                return createHover(functionsArr[snippet], type)
                             }
                         }
 
@@ -77,12 +77,12 @@ function activate(context) {
                                 twigArr[snippet].prefix == word ||
                                 twigArr[snippet].hover == word
                             ) {
-                                return createHover(twigArr[snippet], type);
+                                return createHover(twigArr[snippet], type)
                             }
                         }
                     }
                 })
-            );
+            )
         }
 
         if (twigConfig.formatting === true) {
@@ -91,16 +91,16 @@ function activate(context) {
                     provideDocumentFormattingEdits: function (
                         document
                     ) {
-                        const start = new vscode.Position(0, 0);
+                        const start = new vscode.Position(0, 0)
                         const end = new vscode.Position(
                             document.lineCount - 1,
                             document.lineAt(document.lineCount - 1).text.length
-                        );
-                        const rng = new vscode.Range(start, end);
-                        return prettyDiff(document, rng);
+                        )
+                        const rng = new vscode.Range(start, end)
+                        return prettyDiff(document, rng)
                     }
                 })
-            );
+            )
 
             context.subscriptions.push(
                 vscode.languages.registerDocumentRangeFormattingEditProvider(
@@ -110,13 +110,13 @@ function activate(context) {
                             document,
                             range
                         ) {
-                            return prettyDiff(document, range);
+                            return prettyDiff(document, range)
                         }
                     }
                 )
-            );
+            )
         }
     }
 }
 
-exports.activate = activate;
+exports.activate = activate

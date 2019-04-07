@@ -14,7 +14,7 @@ const defaults = prettydiff.defaults;
  * # Editor Configuration
  */
 const editor = vscode.workspace.getConfiguration('editor');
-const twigConfig = vscode.workspace.getConfiguration('twig-language');
+const twigConfig = vscode.workspace.getConfiguration('twig-language-2');
 
 /**
  * Default Formatting Rules
@@ -48,40 +48,19 @@ const rules = {
         mode: 'beautify',
         language: 'JSON',
         lexer: 'script',
-        indent_size: tabSize,
-        new_line: twigConfig.newLine,
-        object_sort: twigConfig.objSort,
-        wrap: twigConfig.wrap,
-        method_chain: twigConfig.methodchain,
-        ternary_line: twigConfig.ternaryLine,
-        preserve: twigConfig.preserve,
-        space_close: twigConfig.spaceClose,
+        indent_size: tabSize
     },
     stylesheet: {
         mode: 'beautify',
         language: 'SCSS',
         lexer: 'style',
-        indent_size: tabSize,
-        new_line: twigConfig.newLine,
-        object_sort: twigConfig.objSort,
-        wrap: twigConfig.wrap,
-        method_chain: twigConfig.methodchain,
-        ternary_line: twigConfig.ternaryLine,
-        preserve: twigConfig.preserve,
-        space_close: twigConfig.spaceClose,
+        indent_size: tabSize
     },
     javascript: {
         mode: 'beautify',
         language: 'JavaScript',
         lexer: 'script',
-        indent_size: tabSize,
-        new_line: twigConfig.newLine,
-        object_sort: twigConfig.objSort,
-        wrap: twigConfig.wrap,
-        method_chain: twigConfig.methodchain,
-        ternary_line: twigConfig.ternaryLine,
-        preserve: twigConfig.preserve,
-        space_close: twigConfig.spaceClose,
+        indent_size: tabSize
     }
 };
 
@@ -121,13 +100,17 @@ function createHover(snippet, type) {
     return new vscode.Hover({
         language: type,
         value: description + '\n\n' + example
-    });
+    })
 }
 
 const blocks = (code, open, name, source, close) => {
-    const config = Object.assign({}, defaults, rules[name], { source });
-    const pretty = prettydiff.mode(config);
-    return pattern.ignore(`${open.trim()}\n\n${pretty.trim()}\n\n${close.trim()}`)
+    // if (pattern.enforce.includes(name) && open[0] === '{') {
+        const config = Object.assign({}, defaults, rules[name], { source });
+        const pretty = prettydiff.mode(config);
+        return pattern.ignore(`${open.trim()}\n\n${pretty.trim()}\n\n${close.trim()}`)
+    // } else {
+    //     return pattern.ignore(`${code}`)
+    // }
 };
 
 const prettyDiff = (document, range) => {
@@ -142,7 +125,7 @@ const prettyDiff = (document, range) => {
 
 function activate(context) {
     const active = vscode.window.activeTextEditor;
-    if (!active || !active.document) return;
+    if (!active || !active.document) return
 
     registerDocType('html');
 
@@ -159,7 +142,7 @@ function activate(context) {
                                 snippetsArr[snippet].prefix == word ||
                                 snippetsArr[snippet].hover == word
                             ) {
-                                return createHover(snippetsArr[snippet], type);
+                                return createHover(snippetsArr[snippet], type)
                             }
                         }
 
@@ -168,7 +151,7 @@ function activate(context) {
                                 functionsArr[snippet].prefix == word ||
                                 functionsArr[snippet].hover == word
                             ) {
-                                return createHover(functionsArr[snippet], type);
+                                return createHover(functionsArr[snippet], type)
                             }
                         }
 
@@ -177,7 +160,7 @@ function activate(context) {
                                 twigArr[snippet].prefix == word ||
                                 twigArr[snippet].hover == word
                             ) {
-                                return createHover(twigArr[snippet], type);
+                                return createHover(twigArr[snippet], type)
                             }
                         }
                     }
@@ -197,7 +180,7 @@ function activate(context) {
                             document.lineAt(document.lineCount - 1).text.length
                         );
                         const rng = new vscode.Range(start, end);
-                        return prettyDiff(document, rng);
+                        return prettyDiff(document, rng)
                     }
                 })
             );
@@ -210,7 +193,7 @@ function activate(context) {
                             document,
                             range
                         ) {
-                            return prettyDiff(document, range);
+                            return prettyDiff(document, range)
                         }
                     }
                 )
