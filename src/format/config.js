@@ -10,7 +10,7 @@ export const defaults = prettydiff.defaults
  * # Editor Configuration
  */
 export const editor = vscode.workspace.getConfiguration('editor')
-const twigConfig = vscode.workspace.getConfiguration('twig-language-2');
+const twigConfig = vscode.workspace.getConfiguration('twig-language');
 
 /**
  * Default Formatting Rules
@@ -39,12 +39,6 @@ export const rules = {
         ignore_tags: ['script',
             'style',
             'comment']
-    },
-    schema: {
-        mode: 'beautify',
-        language: 'JSON',
-        lexer: 'script',
-        indent_size: tabSize
     },
     stylesheet: {
         mode: 'beautify',
