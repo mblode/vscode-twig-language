@@ -52,7 +52,7 @@ function prettyDiff(document, range) {
         format_object: config.formatObject,
         function_name: config.functionName,
         indent_level: config.indentLevel,
-        indentSize: tabSize,
+        indent_size: tabSize,
         method_chain: config.methodChain,
         never_flatten: config.neverFlatten,
         new_line: config.newLine,
