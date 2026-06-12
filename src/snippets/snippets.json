@@ -251,6 +251,12 @@
         "description": "else",
         "scope": "text.html.twig"
     },
+    "elseif": {
+        "prefix": "elseif",
+        "body": "{% elseif ${1:condition} %}\n\t$0",
+        "description": "elseif",
+        "scope": "text.html.twig"
+    },
     "embed": {
         "prefix": "embed",
         "body": "{% embed \"${1:template}\" %}\n\t$0\n{% endembed %}",

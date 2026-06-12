@@ -42,14 +42,14 @@ Adds a set of Craft CMS/Twig code snippets to use in your Twig templates.
 ```twig
 
 do                {% do ... %}
-extends           {% extends 'template' %}
-from              {% from 'template' import 'macro' %}
-import            {% import 'template' as name %}
+extends           {% extends "template" %}
+from              {% from "template" import "macro" %}
+import            {% import "template" as name %}
 importself        {% import _self as name %}
-inc, include      {% include 'template' %}
-incp              {% include 'template' with params %}
-inckv             {% include 'template' with { key: value } %}
-use               {% use 'template' %}
+inc, include      {% include "template" %}
+incp              {% include "template" with params %}
+inckv             {% include "template" with { key: value } %}
+use               {% use "template" %}
 
 autoescape        {% autoescape 'type' %}...{% endautoescape %}
 block, blockb     {% block name %} ... {% endblock %}
@@ -67,6 +67,7 @@ for               {% for item in seq %} ... {% endfor %}
 fore              {% for item in seq %} ... {% else %} ... {% endfor %}
 
 else              {% else %}
+elseif            {% elseif condition %}
 endif             {% endif %}
 endfor            {% endfor %}
 endset            {% endset %}
@@ -109,7 +110,7 @@ matrixifelse             Basic Matrix field loop using if/elseif
 matrixswitch             Basic Matrix field loop using switch
 nav                      {% nav item in items %}...{% endnav %}
 paginate                 Outputs example of pagination and prev/next links
-redirect                 {% redirect 'login' %}
+redirect                 {% redirect "login" %}
 requirelogin             {% requireLogin %}
 requirepermission        {% requirePermission "spendTheNight" %}
 switch                   {% switch variable %}...{% endswitch %}
