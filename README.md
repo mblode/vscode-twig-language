@@ -179,3 +179,11 @@ info            All craft.users properties and template tags
 info            All craft globals (site info, date, users, template tags)
 
 ```
+
+## License
+
+MIT
+
+---
+
+Crafted by [<img src="https://matthewblode.com/avatar-circle.png" width="20" align="top" />](https://matthewblode.com) [Matthew Blode](https://matthewblode.com)
