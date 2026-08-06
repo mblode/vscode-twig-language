@@ -8,7 +8,7 @@ Version 1, superseded by [Twig Language 2](https://marketplace.visualstudio.com/
 
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=mblode.twig-language">
-    <img src="https://img.shields.io/visual-studio-marketplace/v/mblode.twig-language?style=flat&colorA=000000&colorB=000000" />
+    <img src="https://vsmarketplacebadges.dev/version-short/mblode.twig-language.svg?style=flat&colorA=000000&colorB=000000" />
   </a>
   <a href="https://github.com/mblode/vscode-twig-language/blob/master/LICENSE.md">
     <img src="https://img.shields.io/github/license/mblode/vscode-twig-language?style=flat&colorA=000000&colorB=000000" />
