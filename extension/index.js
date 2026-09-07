@@ -23738,6 +23738,7 @@ var require_html = __commonJS({
         ),
         vscode2.workspace.onDidChangeTextDocument((event) => {
           const document = event.document;
+          if (!event.contentChanges.length) return;
           clear(document);
           if (document.languageId !== "twig" || event.contentChanges.length !== 1)
             return;

@@ -211,6 +211,7 @@ test("closing tags wait for the cursor event and reject superseded changes", () 
     contentChanges: [{ rangeLength: 0, rangeOffset: 8, text: ">" }],
   });
   assert.deepEqual(inserted, []);
+  change({ document, contentChanges: [] });
   editor.selection.active.isEqual = (p) => p.character === 9;
   selection({ textEditor: editor });
   assert.equal(inserted.length, 1);

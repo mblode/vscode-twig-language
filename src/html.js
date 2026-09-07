@@ -166,6 +166,8 @@ function registerHTML(vscode, context) {
     ),
     vscode.workspace.onDidChangeTextDocument((event) => {
       const document = event.document;
+      // Dirty-state notifications carry no content edits and must not cancel typing.
+      if (!event.contentChanges.length) return;
       clear(document);
       if (document.languageId !== "twig" || event.contentChanges.length !== 1)
         return;
