@@ -23,7 +23,7 @@ The engine preserves ambiguous generated code and returns no edits for incomplet
 
 ## Status
 
-Port implemented. Verification and publication are pending.
+Implementation, validation and publication are complete. See the release record below.
 
 
 ## Expanded scope, 8 September 2026
@@ -35,3 +35,13 @@ Both Twig distributions share identical formatter code, HTML service adapter, gr
 Acceptance: all formatter/oracle tests remain green; new TextMate tests use actual VS Code 1.85.2 embedded grammars; packaged extension tests cover HTML completion, closing tags, existing language identity, settings and format/save behavior. All published VSIX files must be tested in minimum and stable VS Code, built in CI and verified by public Marketplace download. Ambiguous reports without source and broader feature requests remain recorded as such in the audit. Browser-only hosting and arbitrary workspace plugins remain outside this release.
 
 Current VS Code references: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#deprecating-extensions ; https://code.visualstudio.com/api/extension-guides/workspace-trust ; https://code.visualstudio.com/api/extension-guides/virtual-workspaces ; https://code.visualstudio.com/api/language-extensions/embedded-languages .
+
+## Release record, 8 September 2026
+
+Version 0.10.0 is published on [GitHub](https://github.com/mblode/vscode-twig-language/releases/tag/v0.10.0) at `a544530748bcec409ba793a7f637ac3d6c2ea894`. [Linux CI](https://github.com/mblode/vscode-twig-language/actions/runs/34167526575) passed the unit, official Twig oracle, build, packaging and extracted-extension integration gates. 301 tests passed with no skips. The packaged runtime also passed VS Code 1.85.2 and 1.136.1 on macOS using isolated test profiles. All CI-packaged file contents match the locally tested runtime/package. The final Twig Language 0.10.0 changelog addition changed documentation only; the final CI retested its extracted package.
+
+Production and development dependency audits report zero vulnerabilities. The GitHub VSIX download is byte-identical to the local release package. SHA-256: `66e8b1f60bbe6fa3a313f0d2f8aae722a78c3c8e28bb58389b5fdcee84f6bffc`.
+
+The public Marketplace VSIX download is byte-identical to the local package and GitHub asset. [Marketplace](https://marketplace.visualstudio.com/items?itemName=mblode.twig-language) reports version 0.10.0, last updated 2026-09-07T22:48:41.940Z. All release gates are complete.
+
+The final HTML closing-tag regression reproduces delayed cursor updates and an empty dirty-state change notification between typing and selection updates. The source waits for the matching cursor and document version; empty notifications do not cancel the pending insertion. `.twig-core.json` and its test enforce shared-file hashes. `scripts/sync-core.mjs` in Twig Language 2 is the source synchronization entry point.
