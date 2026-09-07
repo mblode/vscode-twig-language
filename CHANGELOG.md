@@ -1,5 +1,8 @@
 ## 0.10.0
 
+- Replace PrettyDiff with the source-preserving Twig formatter, fixing conditional wrappers, nested expressions, attributes and safe embedded JavaScript/CSS formatting.
+- Fix live document settings, selection formatting, indentation, ignore rules and unchanged-document edits. Add worker cancellation, stale-result protection and bounded formatting time/input.
+- Require VS Code 1.85+ and document obsolete PrettyDiff settings and migration defaults in README.
 - Share the Twig formatter and language assets across both extension IDs while preserving their existing settings and language modes.
 - Fix embedded CSS/JavaScript/SCSS scope leakage, escaped strings, compact operators, custom element names, unquoted attributes, verbatim priority and argument-free default filters.
 - Fix snippet scopes and the malformed Craft assets query; allow Twig delimiter completion immediately before HTML closing tags.
