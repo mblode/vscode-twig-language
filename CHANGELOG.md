@@ -1,3 +1,9 @@
+## 0.10.1
+
+- Parse Twig block structure before formatting; mismatched or incomplete blocks now leave the document unchanged.
+- Preserve unknown custom tags and paired bodies, including indentation, while formatting supported surrounding syntax.
+- Keep conditional HTML wrappers working across separate Twig blocks; add shared parser regression coverage.
+
 ## 0.10.0
 
 - Replace PrettyDiff with the source-preserving Twig formatter, fixing conditional wrappers, nested expressions, attributes and safe embedded JavaScript/CSS formatting.
