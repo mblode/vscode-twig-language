@@ -1,3 +1,8 @@
+## Unreleased
+
+- Keep the author's padding inside hash braces, so `with { "content": "x" }` is no longer tightened to `{"content": "x"}` (mblode/vscode-twig-language-2#124).
+- Place the cursor inside the padding after auto-closing `{{`, `{%` and `{#`: `{{ | }}` instead of `{{| }}` (mblode/vscode-twig-language-2#123).
+
 ## 0.10.1
 
 - Parse Twig block structure before formatting; mismatched or incomplete blocks now leave the document unchanged.
