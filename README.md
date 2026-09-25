@@ -54,15 +54,15 @@ Set `twig-language.craftSnippets` to `false` to hide the Craft CMS queries, form
 `switch`, `nav` and `cache`, and keep the plain Twig snippets. Craft snippets are marked `"craft": true` in
 the snippet file.
 
-## Template links
+## Go to template
 
-Ctrl/Cmd-click or **Go to Definition** on a template name opens it. This works for `include`, `extends`,
-`embed`, `import`, `from` and `use` tags, `include()` and `source()` calls, and arrays of names. Names
+Ctrl/Cmd-click, **Go to Definition** (F12) or **Peek Definition** on a template name opens it. This works
+for `include`, `extends`, `embed`, `import`, `from` and `use` tags, `include()` and `source()` calls, and arrays of names. Names
 resolve against `twig-language.templatePaths` in the workspace folder (`templates`, `views`,
 `src/templates`, then the folder itself), then the current file's folder. Names without an extension also
 try `.twig`, `.html.twig`, `.html` and `index` files, as in Craft. `@Namespace/` names use
 `twig-language.templateNamespaces`, for example `{ "App": "src/App/templates" }`. Names built at runtime,
-and names that do not match a file, get no link.
+and names that do not match a file, have no definition.
 
 ## Hover
 
@@ -126,7 +126,7 @@ Settings apply immediately and support workspace, folder, and `[html]` overrides
 | `twig-language.formatTimeout` | `5000` | Maximum worker time in milliseconds, from 100 to 30000. |
 | `twig-language.craftSnippets` | `true` | Include Craft CMS snippets. |
 | `twig-language.snippetQuotes` | `double` | Quote style for Twig strings in snippets: `double` or `single`. |
-| `twig-language.templatePaths` | `["templates", "views", "src/templates", "."]` | Template roots for links, relative to the workspace folder or absolute. |
+| `twig-language.templatePaths` | `["templates", "views", "src/templates", "."]` | Template roots for Go to Definition, relative to the workspace folder or absolute. |
 | `twig-language.templateNamespaces` | `{}` | Roots for `@Namespace/` template names. |
 | `twig-language.customTests` | `{}` | Custom test names mapped to hover descriptions. |
 | `twig-language.customFilters` | `{}` | Custom filter names mapped to hover descriptions. |

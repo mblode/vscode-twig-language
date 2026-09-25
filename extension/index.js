@@ -49,7 +49,7 @@ var require_package = __commonJS({
       name: "twig-language",
       displayName: "Twig Language",
       description: "Snippets, Syntax Highlighting, Hover, and Formatting for Twig",
-      version: "0.11.0",
+      version: "0.11.1",
       publisher: "mblode",
       license: "MIT",
       author: {
@@ -1818,7 +1818,7 @@ var require_completions = __commonJS({
         text = text.replace(/\$\{\d+:([^{}]*)\}/g, "$1");
       return text;
     }
-    function insideTwig2(before) {
+    function insideTwig(before) {
       const open = Math.max(
         ...["{{", "{%", "{#"].map((d2) => before.lastIndexOf(d2))
       );
@@ -1852,7 +1852,7 @@ var require_completions = __commonJS({
                 position
               )
             );
-            if (insideTwig2(before))
+            if (insideTwig(before))
               for (const { name, kind, description } of customDefinitions2(config)) {
                 const item = new vscode2.CompletionItem(
                   { label: name, description: `custom ${kind}` },
@@ -1869,7 +1869,7 @@ var require_completions = __commonJS({
     module2.exports = {
       snippetList,
       customDefinitions: customDefinitions2,
-      insideTwig: insideTwig2,
+      insideTwig,
       registerCompletions: registerCompletions2
     };
   }
@@ -2238,22 +2238,6 @@ var require_templates = __commonJS({
         document.positionAt(ref.end)
       );
       context.subscriptions.push(
-        vscode2.languages.registerDocumentLinkProvider(language2, {
-          async provideDocumentLinks(document, token) {
-            const cache = /* @__PURE__ */ new Map();
-            const links = [];
-            for (const ref of templateReferences(document.getText())) {
-              if (token.isCancellationRequested) return;
-              const target = await resolve(document, ref.name, cache);
-              if (target) {
-                const link = new vscode2.DocumentLink(range(document, ref), target);
-                link.tooltip = "Open template";
-                links.push(link);
-              }
-            }
-            return links;
-          }
-        }),
         vscode2.languages.registerDefinitionProvider(language2, {
           async provideDefinition(document, position) {
             const offset = document.offsetAt(position);
@@ -24756,6 +24740,191 @@ var require_html = __commonJS({
   }
 });
 
+// src/emmet.js
+var require_emmet = __commonJS({
+  "src/emmet.js"(exports2, module2) {
+    "use strict";
+    var {
+      TokenType: T,
+      ScannerState: S
+    } = (init_htmlLanguageService(), __toCommonJS(htmlLanguageService_exports));
+    var { project, service } = require_html();
+    var TEMPLATES = [
+      "text/html",
+      "text/plain",
+      "text/x-template",
+      "text/template",
+      "text/ng-template"
+    ];
+    var CLOSERS = { "{": "}}", "%": "%}", "#": "#}" };
+    function emmetSyntax(source, offset, projection = project(source)) {
+      for (const [start, end2] of projection.ranges) {
+        if (start >= offset) break;
+        const raw = source.slice(start, end2);
+        const closed = raw.length >= 4 && raw.endsWith(CLOSERS[raw[1]] || "%}");
+        if (offset < end2 || !closed) return;
+      }
+      const scanner = service.createScanner(projection.text);
+      let tag, attribute, scriptType, previous;
+      for (let token2 = scanner.scan(); token2 !== T.EOS; token2 = scanner.scan()) {
+        const start = scanner.getTokenOffset();
+        if (start >= offset) break;
+        const end2 = scanner.getTokenEnd();
+        const text2 = scanner.getTokenText();
+        if (token2 === T.StartTag) {
+          tag = text2.toLowerCase();
+          attribute = scriptType = void 0;
+        } else if (token2 === T.AttributeName) attribute = text2.toLowerCase();
+        else if (token2 === T.AttributeValue && tag === "script" && attribute === "type")
+          scriptType = text2.replace(/^["']|["']$/g, "").trim().toLowerCase();
+        previous = { token: token2, end: end2, text: text2, state: scanner.getScannerState() };
+      }
+      if (!previous) return "html";
+      const { token, end, text, state } = previous;
+      const script = () => scriptType && TEMPLATES.includes(scriptType) ? "html" : void 0;
+      switch (token) {
+        case T.Content:
+          return "html";
+        case T.Styles:
+          return "css";
+        case T.Script:
+          return script();
+        case T.Comment:
+          return;
+        case T.AttributeValue: {
+          if (attribute !== "style" || !/^["']/.test(text)) return;
+          const closed = text.length > 1 && text.endsWith(text[0]);
+          return offset < end || !closed ? "css" : void 0;
+        }
+      }
+      if (offset < end) return;
+      if (state === S.WithinContent) return "html";
+      if (state === S.WithinStyleContent) return "css";
+      if (state === S.WithinScriptContent) return script();
+    }
+    function twigMappings(vscode2) {
+      const levels = [];
+      const add = (config2, key, target) => {
+        const value = config2.inspect("includeLanguages")?.[key];
+        if (value && typeof value === "object" && "twig" in value)
+          levels.push({ config: config2, value, target });
+      };
+      if (vscode2.workspace.workspaceFile)
+        for (const folder of vscode2.workspace.workspaceFolders || [])
+          add(
+            vscode2.workspace.getConfiguration("emmet", folder.uri),
+            "workspaceFolderValue",
+            vscode2.ConfigurationTarget.WorkspaceFolder
+          );
+      const config = vscode2.workspace.getConfiguration("emmet");
+      add(config, "workspaceValue", vscode2.ConfigurationTarget.Workspace);
+      add(config, "globalValue", vscode2.ConfigurationTarget.Global);
+      return levels;
+    }
+    async function removeTwigMapping(vscode2) {
+      for (const { config, value, target } of twigMappings(vscode2)) {
+        const { twig, ...rest } = value;
+        await config.update(
+          "includeLanguages",
+          Object.keys(rest).length ? rest : void 0,
+          target
+        );
+      }
+    }
+    var DISMISSED = "emmetIncludeLanguagesDismissed";
+    var offering = false;
+    async function offerMappingRemoval(vscode2, context) {
+      if (offering || context.globalState.get(DISMISSED) || !twigMappings(vscode2).length)
+        return;
+      offering = true;
+      const remove = "Remove Twig Mapping";
+      const never = "Don't Show Again";
+      const choice = await vscode2.window.showInformationMessage(
+        `Twig Language 2 now provides Emmet in Twig files. The "twig" entry in "emmet.includeLanguages" also turns on VS Code's Emmet, which expands text inside Twig tags such as {% if event.show_thumb %}. Remove the entry? Emmet commands such as Wrap with Abbreviation need it.`,
+        remove,
+        never
+      );
+      offering = false;
+      if (choice === remove) await removeTwigMapping(vscode2);
+      if (choice) await context.globalState.update(DISMISSED, true);
+    }
+    function registerEmmet(vscode2, context) {
+      const helper = require("@vscode/emmet-helper");
+      const { TextDocument: TextDocument3 } = (init_main2(), __toCommonJS(main_exports));
+      const provider = {
+        provideCompletionItems(document, position, token) {
+          const emmet = vscode2.workspace.getConfiguration("emmet", document);
+          if (token.isCancellationRequested || emmet.get("showExpandedAbbreviation") === "never" || (emmet.get("excludeLanguages") || []).includes(document.languageId))
+            return;
+          const source = document.getText();
+          const projection = project(source);
+          const syntax = emmetSyntax(
+            source,
+            document.offsetAt(position),
+            projection
+          );
+          if (!syntax) return;
+          const virtual = TextDocument3.create(
+            document.uri.toString(),
+            "html",
+            document.version,
+            projection.text
+          );
+          const result = helper.doComplete(virtual, position, syntax, {
+            showExpandedAbbreviation: emmet.get("showExpandedAbbreviation"),
+            showAbbreviationSuggestions: emmet.get("showAbbreviationSuggestions"),
+            showSuggestionsAsSnippets: emmet.get("showSuggestionsAsSnippets"),
+            syntaxProfiles: { ...emmet.get("syntaxProfiles") || {} },
+            variables: emmet.get("variables"),
+            preferences: { ...emmet.get("preferences") || {} },
+            excludeLanguages: emmet.get("excludeLanguages")
+          });
+          if (!result?.items?.length) return;
+          const snippets2 = emmet.get("showSuggestionsAsSnippets") === true;
+          return new vscode2.CompletionList(
+            result.items.filter((item) => item.textEdit).map((item) => {
+              const completion = new vscode2.CompletionItem(item.label);
+              const { range, newText } = item.textEdit;
+              completion.insertText = new vscode2.SnippetString(newText);
+              completion.range = new vscode2.Range(
+                range.start.line,
+                range.start.character,
+                range.end.line,
+                range.end.character
+              );
+              completion.documentation = item.documentation;
+              completion.detail = item.detail;
+              completion.filterText = item.filterText;
+              completion.sortText = item.sortText;
+              if (snippets2) completion.kind = vscode2.CompletionItemKind.Snippet;
+              return completion;
+            }),
+            true
+          );
+        }
+      };
+      context.subscriptions.push(
+        vscode2.languages.registerCompletionItemProvider(
+          "twig",
+          provider,
+          ..."!.}:*$]/>0123456789"
+        ),
+        vscode2.workspace.onDidChangeConfiguration((event) => {
+          if (event.affectsConfiguration("emmet.includeLanguages"))
+            void offerMappingRemoval(vscode2, context);
+        })
+      );
+      void offerMappingRemoval(vscode2, context);
+    }
+    module2.exports = {
+      emmetSyntax,
+      twigMappings,
+      removeTwigMapping,
+      registerEmmet
+    };
+  }
+});
+
 // src/extension.js
 var vscode = require("vscode");
 var path = require("node:path");
@@ -24770,14 +24939,13 @@ var snippets = [
 ];
 var { runFormatter } = require_service();
 var { readOptions, matchesIgnore } = require_settings();
-var {
-  registerCompletions,
-  customDefinitions,
-  insideTwig
-} = require_completions();
+var { registerCompletions, customDefinitions } = require_completions();
 var { registerTemplates } = require_templates();
 function activate(context) {
-  if (language === "twig") require_html().registerHTML(vscode, context);
+  if (language === "twig") {
+    require_html().registerHTML(vscode, context);
+    require_emmet().registerEmmet(vscode, context);
+  }
   const pending = /* @__PURE__ */ new Map();
   const output = vscode.window.createOutputChannel(label);
   context.subscriptions.push(output, {
@@ -24895,34 +25063,11 @@ function activate(context) {
       setTimeout(() => padDelimiters(vscode.window.activeTextEditor));
     }
   }
-  let inTag = false;
-  function trackTag(editor) {
-    const document = editor?.document;
-    if (!document || document.languageId !== "twig") return;
-    const position = editor.selection.active;
-    const value = editor.selections.length === 1 && insideTwig(
-      document.getText(
-        new vscode.Range(
-          document.positionAt(
-            Math.max(0, document.offsetAt(position) - 4e3)
-          ),
-          position
-        )
-      )
-    );
-    if (value !== inTag)
-      vscode.commands.executeCommand(
-        "setContext",
-        "twig.inTag",
-        inTag = value
-      );
-  }
   context.subscriptions.push(
     vscode.workspace.onDidChangeTextDocument(armDelimiters),
-    vscode.window.onDidChangeTextEditorSelection((event) => {
-      padDelimiters(event.textEditor);
-      trackTag(event.textEditor);
-    }),
+    vscode.window.onDidChangeTextEditorSelection(
+      (event) => padDelimiters(event.textEditor)
+    ),
     vscode.languages.registerDocumentFormattingEditProvider(language, {
       provideDocumentFormattingEdits: (document, options, token) => provideEdits(document, options, token)
     }),

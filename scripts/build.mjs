@@ -10,7 +10,8 @@ const options = {
   mainFields: ["module", "main"],
   format: "cjs",
   target: "node18",
-  external: ["vscode"],
+  // src/emmet.js only registers for the "twig" language ID; this extension uses "html".
+  external: ["vscode", "@vscode/emmet-helper"],
   legalComments: "linked",
   logLevel: "info",
 };

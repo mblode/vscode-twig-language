@@ -277,32 +277,45 @@ exports.run = async () => {
   await fs.writeFile(path.join(root, "templates/partials/_header.twig"), "");
   const linked = await open(
     "links.twig",
-    '{% extends "base.html.twig" %}\n{% include("partials/_header.twig") %}\n{% include "missing.twig" %}\n',
+    '{% extends "base.html.twig" %}\n{% include("partials/_header.twig") %}\n{% include ["missing.twig", "base.html.twig"] %}\n',
   );
-  const links = await vscode.commands.executeCommand(
-    "vscode.executeLinkProvider",
-    linked.uri,
-  );
+  const definition = async (line, character) =>
+    (
+      await vscode.commands.executeCommand(
+        "vscode.executeDefinitionProvider",
+        linked.uri,
+        new vscode.Position(line, character),
+      )
+    ).map((d) => path.relative(root, (d.targetUri ?? d.uri).fsPath));
   assert.deepEqual(
-    links
-      .filter((l) => l.target?.scheme === "file")
-      .map((l) => path.relative(root, l.target.fsPath)),
-    [
-      path.join("templates", "base.html.twig"),
-      path.join("templates", "partials", "_header.twig"),
-    ],
-  );
-  const definitions = await vscode.commands.executeCommand(
-    "vscode.executeDefinitionProvider",
-    linked.uri,
-    new vscode.Position(0, 14),
-  );
-  assert.equal(
-    (definitions[0].targetUri ?? definitions[0].uri).fsPath,
-    path.join(root, "templates/base.html.twig"),
+    await definition(0, 14),
+    [path.join("templates", "base.html.twig")],
     "go to definition opens extended templates",
   );
+  assert.deepEqual(await definition(1, 20), [
+    path.join("templates", "partials", "_header.twig"),
+  ]);
+  assert.deepEqual(
+    await definition(2, 30),
+    [path.join("templates", "base.html.twig")],
+    "array entries resolve individually",
+  );
+  assert.deepEqual(
+    await definition(2, 15),
+    [],
+    "unresolvable names have no definition",
+  );
+  assert.equal(
+    (
+      await vscode.commands.executeCommand(
+        "vscode.executeLinkProvider",
+        linked.uri,
+      )
+    ).filter((l) => /\.twig$/.test(l.target?.path ?? "")).length,
+    0,
+    "templates open through Go to Definition only, not document links",
+  );
   console.log(
-    "VS Code integration: activation, document/range/save formatting, live HTML settings, indentation, ignore, errors, CRLF, hover, file associations, HTML IntelliSense, snippet settings, custom definitions and template links passed.",
+    "VS Code integration: activation, document/range/save formatting, live HTML settings, indentation, ignore, errors, CRLF, hover, file associations, HTML IntelliSense, snippet settings, custom definitions and go to template passed.",
   );
 };

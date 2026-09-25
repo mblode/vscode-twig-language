@@ -1,3 +1,7 @@
+## 0.11.1
+
+- Template names open through Go to Definition only (Ctrl/Cmd-click, F12 and Peek), no longer also as document links, so Ctrl/Cmd-click triggers one action.
+
 ## 0.11.0
 
 - Ctrl/Cmd-click and Go to Definition on template names in `include`, `extends`, `embed`, `import`, `from`, `use`, `include()` and `source()`, resolved through the new `templatePaths` and `templateNamespaces` settings (#60).
