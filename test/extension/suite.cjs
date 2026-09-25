@@ -141,7 +141,20 @@ exports.run = async () => {
   await apply(saving, [
     vscode.TextEdit.insert(new vscode.Position(0, 3), "{{other}}"),
   ]);
-  assert(await saving.save());
+  // Newer VS Code can apply the formatOnSave update after the first save; re-dirty and retry only that race.
+  for (let i = 0; i < 20; i++) {
+    if (!saving.isDirty)
+      await apply(saving, [
+        vscode.TextEdit.insert(saving.positionAt(saving.getText().length), " "),
+      ]);
+    assert(await saving.save());
+    if (
+      (await fs.readFile(saving.uri.fsPath, "utf8")) ===
+      "<p>{{ other }}{{ value }}</p>\n"
+    )
+      break;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
   assert.equal(
     await fs.readFile(saving.uri.fsPath, "utf8"),
     "<p>{{ other }}{{ value }}</p>\n",
@@ -207,7 +220,89 @@ exports.run = async () => {
       "workbench.action.revertAndCloseActiveEditor",
     );
   }
+  const label = (item) =>
+    typeof item.label === "string" ? item.label : item.label.label;
+  const complete = async (doc, position) =>
+    (
+      await vscode.commands.executeCommand(
+        "vscode.executeCompletionItemProvider",
+        doc.uri,
+        position,
+      )
+    ).items;
+  const snippetDoc = await open("snippets.twig", "sw");
+  const end = new vscode.Position(0, 2);
+  const snippet = (items, prefix) =>
+    items.find(
+      (i) => label(i) === prefix && i.kind === vscode.CompletionItemKind.Snippet,
+    );
+  assert(snippet(await complete(snippetDoc, end), "switch"), "Craft snippets are on by default");
+  assert.equal(
+    snippet(await complete(snippetDoc, end), "inc").insertText.value,
+    '{% include "${1:template}" %}$0',
+  );
+  await update("craftSnippets", false);
+  const core = await complete(snippetDoc, end);
+  assert(!snippet(core, "switch"), "craftSnippets: false hides Craft snippets");
+  assert(snippet(core, "if"), "core snippets remain");
+  await update("craftSnippets", undefined);
+  await update("snippetQuotes", "single");
+  assert.equal(
+    snippet(await complete(snippetDoc, end), "inc").insertText.value,
+    "{% include '${1:template}' %}$0",
+  );
+  await update("snippetQuotes", undefined);
+  await update("customTests", { numeric: "True for numeric values." });
+  const customDoc = await open("custom-test.twig", "{% if x is numeric %}{% endif %}");
+  assert(
+    (await complete(customDoc, new vscode.Position(0, 13))).some(
+      (i) => label(i) === "numeric",
+    ),
+    "custom tests complete inside Twig",
+  );
+  const customHover = await vscode.commands.executeCommand(
+    "vscode.executeHoverProvider",
+    customDoc.uri,
+    new vscode.Position(0, 13),
+  );
+  assert(
+    customHover.some((h) =>
+      h.contents.some((c) => (c.value ?? c).includes("True for numeric values.")),
+    ),
+    "custom tests have hover documentation",
+  );
+  await update("customTests", undefined);
+  await fs.mkdir(path.join(root, "templates/partials"), { recursive: true });
+  await fs.writeFile(path.join(root, "templates/base.html.twig"), "");
+  await fs.writeFile(path.join(root, "templates/partials/_header.twig"), "");
+  const linked = await open(
+    "links.twig",
+    '{% extends "base.html.twig" %}\n{% include("partials/_header.twig") %}\n{% include "missing.twig" %}\n',
+  );
+  const links = await vscode.commands.executeCommand(
+    "vscode.executeLinkProvider",
+    linked.uri,
+  );
+  assert.deepEqual(
+    links
+      .filter((l) => l.target?.scheme === "file")
+      .map((l) => path.relative(root, l.target.fsPath)),
+    [
+      path.join("templates", "base.html.twig"),
+      path.join("templates", "partials", "_header.twig"),
+    ],
+  );
+  const definitions = await vscode.commands.executeCommand(
+    "vscode.executeDefinitionProvider",
+    linked.uri,
+    new vscode.Position(0, 14),
+  );
+  assert.equal(
+    (definitions[0].targetUri ?? definitions[0].uri).fsPath,
+    path.join(root, "templates/base.html.twig"),
+    "go to definition opens extended templates",
+  );
   console.log(
-    "VS Code integration: activation, document/range/save formatting, live HTML settings, indentation, ignore, errors, CRLF, hover, file associations and HTML IntelliSense passed.",
+    "VS Code integration: activation, document/range/save formatting, live HTML settings, indentation, ignore, errors, CRLF, hover, file associations, HTML IntelliSense, snippet settings, custom definitions and template links passed.",
   );
 };

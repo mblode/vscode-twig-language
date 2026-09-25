@@ -48,9 +48,37 @@ Open a `.twig` file. Highlighting and hover apply straight away. Type a snippet 
 - **Forms:** `formlogin`, `formuserregistration`, `formuserprofile`, `formforgotpassword`, `formsetpassword`, `formsearch`, and `formsearchresults`, each a complete Craft form.
 - **Helpers:** `csrf`, `head`, `endbody`, the `craft.app.request` getters, and the maths filters (`ceil`, `floor`, `round`, `min`, `max`, `random`, `shuffle`).
 
+Snippets write Twig strings with double quotes, such as `{% include "template" %}`. Set
+`twig-language.snippetQuotes` to `single` for `{% include 'template' %}`; HTML attribute quotes stay double.
+Set `twig-language.craftSnippets` to `false` to hide the Craft CMS queries, forms, helpers and tags such as
+`switch`, `nav` and `cache`, and keep the plain Twig snippets. Craft snippets are marked `"craft": true` in
+the snippet file.
+
+## Template links
+
+Ctrl/Cmd-click or **Go to Definition** on a template name opens it. This works for `include`, `extends`,
+`embed`, `import`, `from` and `use` tags, `include()` and `source()` calls, and arrays of names. Names
+resolve against `twig-language.templatePaths` in the workspace folder (`templates`, `views`,
+`src/templates`, then the folder itself), then the current file's folder. Names without an extension also
+try `.twig`, `.html.twig`, `.html` and `index` files, as in Craft. `@Namespace/` names use
+`twig-language.templateNamespaces`, for example `{ "App": "src/App/templates" }`. Names built at runtime,
+and names that do not match a file, get no link.
+
 ## Hover
 
 Hold the cursor over Twig code to get its documentation: 33 filters, 15 functions, and 28 language constructs. Turn it off with `twig-language.hover`.
+
+Add your project's own tests, filters and functions with `twig-language.customTests`, `customFilters` and
+`customFunctions`, for example `{ "numeric": "True when the value is numeric." }`. They are offered as
+completions inside Twig tags and show their description on hover. Any name after `is` or `is not` is
+highlighted as a test.
+
+## MJML
+
+MJML tags keep their names and nesting when formatted, and `<mj-style>` bodies are highlighted and
+formatted as CSS. `.mjml.twig` files open in this extension. To use it for plain `.mjml` files that
+contain Twig, add `"files.associations": { "*.mjml": "html" }`; this replaces the MJML extension's
+language mode for those files.
 
 ## Formatting
 
@@ -96,6 +124,13 @@ Settings apply immediately and support workspace, folder, and `[html]` overrides
 | `twig-language.embeddedFormatting` | `true` | Format supported JavaScript/CSS bodies with Prettier. |
 | `twig-language.ignore` | `[]` | File globs to skip, such as `**/vendor/**`. Supports `*`, `**`, and `?`. |
 | `twig-language.formatTimeout` | `5000` | Maximum worker time in milliseconds, from 100 to 30000. |
+| `twig-language.craftSnippets` | `true` | Include Craft CMS snippets. |
+| `twig-language.snippetQuotes` | `double` | Quote style for Twig strings in snippets: `double` or `single`. |
+| `twig-language.templatePaths` | `["templates", "views", "src/templates", "."]` | Template roots for links, relative to the workspace folder or absolute. |
+| `twig-language.templateNamespaces` | `{}` | Roots for `@Namespace/` template names. |
+| `twig-language.customTests` | `{}` | Custom test names mapped to hover descriptions. |
+| `twig-language.customFilters` | `{}` | Custom filter names mapped to hover descriptions. |
+| `twig-language.customFunctions` | `{}` | Custom function names mapped to hover descriptions. |
 
 ### Migrating from 0.9.4
 
